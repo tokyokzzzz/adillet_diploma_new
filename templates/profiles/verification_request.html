@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+
+{% block title %}Mentor Verification — StudyBridge{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-7">
+
+      <div class="mb-4">
+        <a href="{% url 'mentor_dashboard' %}" class="text-muted small">
+          <i class="bi bi-arrow-left me-1"></i>Back to Dashboard
+        </a>
+        <h2 class="fw-bold mt-2">Mentor Verification</h2>
+        <p class="text-muted small">
+          Submit your student enrollment details for manual review.
+          Once approved, a verified badge will appear on your profile.
+        </p>
+      </div>
+
+      {% if existing %}
+
+        <!-- Current status card -->
+        <div class="card mb-4">
+          <div class="card-body p-4">
+            <h6 class="text-muted text-uppercase small fw-semibold mb-3">Current Request Status</h6>
+
+            <div class="d-flex align-items-center gap-3 mb-3">
+              {% if existing.is_approved %}
+                <i class="bi bi-patch-check-fill text-success fs-3"></i>
+                <div>
+                  <div class="fw-semibold">Approved</div>
+                  <div class="text-muted small">Your profile is now verified.</div>
+                </div>
+                <span class="badge bg-success ms-auto">Verified</span>
+              {% elif existing.is_pending %}
+                <i class="bi bi-hourglass-split text-warning fs-3"></i>
+                <div>
+                  <div class="fw-semibold">Under Review</div>
+                  <div class="text-muted small">Your request is being reviewed by an admin.</div>
+                </div>
+                <span class="badge bg-warning text-dark ms-auto">Pending</span>
+              {% else %}
+                <i class="bi bi-x-circle text-danger fs-3"></i>
+                <div>
+                  <div class="fw-semibold">Request Rejected</div>
+                  <div class="text-muted small">
+                    Your previous request was not approved. You may resubmit below.
+                  </div>
+                </div>
+                <span class="badge bg-danger ms-auto">Rejected</span>
+              {% endif %}
+            </div>
+
+            <div class="row g-2 border-top pt-3">
+              <div class="col-sm-6">
+                <span class="text-muted small">University submitted</span>
+                <div class="small fw-semibold">{{ existing.university_name }}</div>
+              </div>
+              <div class="col-sm-6">
+                <span class="text-muted small">Student ID submitted</span>
+                <div class="small fw-semibold">{{ existing.student_id }}</div>
+              </div>
+              <div class="col-sm-6">
+                <span class="text-muted small">Submitted</span>
+                <div class="small">{{ existing.submitted_at|date:"N j, Y" }}</div>
+              </div>
+              {% if existing.reviewed_at %}
+                <div class="col-sm-6">
+                  <span class="text-muted small">Reviewed</span>
+                  <div class="small">{{ existing.reviewed_at|date:"N j, Y" }}</div>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+      {% endif %}
+
+      <!-- Show form only if no request, or if rejected (allow resubmission) -->
+      {% if form %}
+        <div class="card">
+          <div class="card-body p-4">
+            <h6 class="fw-semibold mb-1">
+              {% if existing %}Resubmit Verification Request{% else %}Submit Verification Request{% endif %}
+            </h6>
+            <p class="text-muted small mb-4">
+              Provide your university and student ID exactly as they appear on your enrollment confirmation.
+              An admin will review your request manually.
+            </p>
+
+            <form method="post" novalidate>
+              {% csrf_token %}
+
+              <div class="mb-3">
+                <label class="form-label fw-semibold small">University Name</label>
+                <input
+                  type="text"
+                  name="university_name"
+                  value="{{ form.university_name.value|default:'' }}"
+                  class="form-control {% if form.university_name.errors %}is-invalid{% endif %}"
+                  placeholder="e.g. Technische Universität Berlin"
+                />
+                {% if form.university_name.errors %}
+                  <div class="invalid-feedback">{{ form.university_name.errors.0 }}</div>
+                {% endif %}
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fw-semibold small">Student ID / Enrollment Number</label>
+                <input
+                  type="text"
+                  name="student_id"
+                  value="{{ form.student_id.value|default:'' }}"
+                  class="form-control {% if form.student_id.errors %}is-invalid{% endif %}"
+                  placeholder="e.g. 4567890"
+                />
+                <div class="form-text">{{ form.student_id.help_text }}</div>
+                {% if form.student_id.errors %}
+                  <div class="invalid-feedback">{{ form.student_id.errors.0 }}</div>
+                {% endif %}
+              </div>
+
+              <div class="mb-4">
+                <label class="form-label fw-semibold small">Additional Note <span class="text-muted">(optional)</span></label>
+                <textarea
+                  name="note"
+                  rows="4"
+                  class="form-control {% if form.note.errors %}is-invalid{% endif %}"
+                  placeholder="e.g. My enrollment was under a different transliteration of my name..."
+                >{{ form.note.value|default:'' }}</textarea>
+                <div class="form-text">{{ form.note.help_text }}</div>
+                {% if form.note.errors %}
+                  <div class="invalid-feedback">{{ form.note.errors.0 }}</div>
+                {% endif %}
+              </div>
+
+              <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary px-4">Submit Request</button>
+                <a href="{% url 'mentor_dashboard' %}" class="btn btn-outline-secondary">Cancel</a>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      {% endif %}
+
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,324 @@
+{% extends "base.html" %}
+
+{% block title %}
+  {% if conversation.applicant == user %}
+    {% with mp=other.mentor_profile %}Chat with {{ mp.full_name|default:other.username }} — StudyBridge{% endwith %}
+  {% else %}
+    {% with ap=other.applicant_profile %}Chat with {{ ap.full_name|default:other.username }} — StudyBridge{% endwith %}
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-7">
+
+      <!-- Header -->
+      <div class="d-flex align-items-center gap-3 mb-3">
+        <a href="{% url 'conversation_list' %}" class="text-muted">
+          <i class="bi bi-arrow-left fs-5"></i>
+        </a>
+        <div class="flex-grow-1">
+          {% if conversation.applicant == user %}
+            {% with mp=other.mentor_profile %}
+              <div class="fw-semibold">{{ mp.full_name|default:other.username }}</div>
+              <div class="text-muted small">
+                {% if mp.university_name %}{{ mp.university_name }}{% endif %}
+                {% if mp.current_country %}&bull; {{ mp.current_country }}{% endif %}
+              </div>
+            {% endwith %}
+          {% else %}
+            {% with ap=other.applicant_profile %}
+              <div class="fw-semibold">{{ ap.full_name|default:other.username }}</div>
+              <div class="text-muted small">
+                Applicant{% if ap.target_country %} &mdash; interested in {{ ap.target_country }}{% endif %}
+              </div>
+            {% endwith %}
+          {% endif %}
+        </div>
+        {% if conversation.is_active %}
+          <span class="badge bg-success">Active</span>
+        {% elif conversation.is_pending %}
+          <span class="badge bg-warning text-dark">Pending</span>
+        {% else %}
+          <span class="badge bg-danger">Declined</span>
+        {% endif %}
+      </div>
+
+      {% if conversation.is_pending %}
+
+        <!-- PENDING STATE -->
+        <div class="card">
+          <div class="card-body p-4">
+            {% if user == conversation.mentor %}
+              <div class="text-center py-3">
+                <i class="bi bi-person-raised-hand fs-1 text-primary mb-3 d-block"></i>
+                <h5 class="fw-semibold mb-1">Chat Request</h5>
+                {% with ap=conversation.applicant.applicant_profile %}
+                  <p class="text-muted small mb-1">
+                    <strong>{{ ap.full_name|default:conversation.applicant.username }}</strong>
+                    wants to chat with you.
+                  </p>
+                  {% if ap.target_country or ap.intended_major %}
+                    <p class="text-muted small mb-4">
+                      {% if ap.target_country %}Interested in studying in <strong>{{ ap.target_country }}</strong>{% endif %}
+                      {% if ap.intended_major %} &mdash; {{ ap.intended_major }}{% endif %}
+                    </p>
+                  {% else %}
+                    <p class="mb-4"></p>
+                  {% endif %}
+                {% endwith %}
+                <div class="d-flex justify-content-center gap-3">
+                  <form method="post" action="{% url 'accept_chat' conversation.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-success px-4">
+                      <i class="bi bi-check-lg me-2"></i>Accept Request
+                    </button>
+                  </form>
+                  <form method="post" action="{% url 'decline_chat' conversation.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-danger px-4">
+                      <i class="bi bi-x-lg me-2"></i>Decline
+                    </button>
+                  </form>
+                </div>
+              </div>
+            {% else %}
+              <div class="text-center py-3">
+                <i class="bi bi-hourglass-split fs-1 text-warning mb-3 d-block"></i>
+                <h5 class="fw-semibold mb-1">Request Sent</h5>
+                <p class="text-muted small mb-0">
+                  Your chat request is waiting for the mentor to accept.
+                  You will be able to send messages once they accept.
+                </p>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+
+      {% elif conversation.is_declined %}
+
+        <!-- DECLINED STATE -->
+        <div class="card">
+          <div class="card-body p-4 text-center py-3">
+            <i class="bi bi-x-circle fs-1 text-danger mb-3 d-block"></i>
+            <h5 class="fw-semibold mb-1">Request Declined</h5>
+            {% if user == conversation.applicant %}
+              <p class="text-muted small mb-3">
+                This mentor has declined your chat request.
+                You can browse other mentors who may be a better match.
+              </p>
+              <a href="{% url 'mentor_list' %}" class="btn btn-primary btn-sm px-4">
+                Browse Other Mentors
+              </a>
+            {% else %}
+              <p class="text-muted small mb-0">You declined this chat request.</p>
+            {% endif %}
+          </div>
+        </div>
+
+      {% else %}
+
+        <!-- ACTIVE STATE -->
+
+        <!-- Color legend -->
+        <div class="d-flex gap-3 mb-2 px-1">
+          <div class="d-flex align-items-center gap-1">
+            <span class="chat-legend-dot" style="background:#2563eb;"></span>
+            <span class="text-muted" style="font-size:0.75rem;">
+              {% if conversation.applicant == user %}Your messages{% else %}{{ conversation.applicant.applicant_profile.full_name|default:conversation.applicant.username }}{% endif %}
+            </span>
+          </div>
+          <div class="d-flex align-items-center gap-1">
+            <span class="chat-legend-dot" style="background:#0d9488;"></span>
+            <span class="text-muted" style="font-size:0.75rem;">
+              {% if conversation.mentor == user %}Your messages{% else %}{{ conversation.mentor.mentor_profile.full_name|default:conversation.mentor.username }}{% endif %}
+            </span>
+          </div>
+        </div>
+
+        <!-- Message thread -->
+        <div class="chat-window card mb-0" style="border-bottom-left-radius:0; border-bottom-right-radius:0;">
+          <div class="chat-messages" id="chat-messages"
+               data-last-id="{{ last_message_id }}"
+               data-poll-url="{% url 'poll_messages' conversation.pk %}"
+               data-send-url="{% url 'send_message' conversation.pk %}"
+               data-user-role="{{ user.role }}">
+            {% if chat_messages %}
+              {% for msg in chat_messages %}
+                <div class="chat-message
+                  {% if msg.sender == user %}chat-sent{% else %}chat-received{% endif %}
+                  {% if msg.sender.is_applicant %}chat-from-applicant{% else %}chat-from-mentor{% endif %}">
+                  <div class="chat-bubble">{{ msg.text }}</div>
+                  <div class="chat-meta">
+                    {% if msg.sender == user %}You{% else %}{{ msg.sender.username }}{% endif %}
+                    &middot; {{ msg.timestamp|date:"M j, H:i" }}
+                  </div>
+                </div>
+              {% endfor %}
+            {% else %}
+              <p class="text-center text-muted small my-4" id="empty-notice">
+                Chat accepted! Send the first message.
+              </p>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Send form -->
+        <form id="message-form" class="card p-3 border-top-0" style="border-top-left-radius:0; border-top-right-radius:0;" autocomplete="off">
+          {% csrf_token %}
+          <div class="d-flex gap-2 align-items-end">
+            <div class="flex-grow-1">
+              <textarea
+                id="message-input"
+                name="text"
+                rows="2"
+                class="form-control"
+                placeholder="Write a message..."
+                style="resize:none;"
+              ></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary px-3">
+              <i class="bi bi-send-fill"></i>
+            </button>
+          </div>
+          <div id="send-error" class="text-danger small mt-1" style="display:none;"></div>
+        </form>
+
+      {% endif %}
+
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{% if conversation.is_active %}
+<script>
+(function () {
+  const container = document.getElementById("chat-messages");
+  const form      = document.getElementById("message-form");
+  const input     = document.getElementById("message-input");
+  const errBox    = document.getElementById("send-error");
+
+  const sendUrl   = container.dataset.sendUrl;
+  const pollUrl   = container.dataset.pollUrl;
+  const userRole  = container.dataset.userRole;
+  let   lastId    = parseInt(container.dataset.lastId, 10) || 0;
+
+  // ── helpers ──────────────────────────────────────────────────────────────
+
+  function escapeHtml(str) {
+    const d = document.createElement("div");
+    d.appendChild(document.createTextNode(str));
+    return d.innerHTML;
+  }
+
+  function scrollBottom() {
+    container.scrollTop = container.scrollHeight;
+  }
+
+  function buildBubble(msg) {
+    const isMine     = msg.is_mine;
+    const roleClass  = msg.sender_role === "applicant" ? "chat-from-applicant" : "chat-from-mentor";
+    const alignClass = isMine ? "chat-sent" : "chat-received";
+    const label      = isMine ? "You" : msg.sender_username;
+
+    const div = document.createElement("div");
+    div.className = `chat-message ${alignClass} ${roleClass}`;
+    div.innerHTML =
+      `<div class="chat-bubble">${escapeHtml(msg.text)}</div>` +
+      `<div class="chat-meta">${escapeHtml(label)} &middot; ${escapeHtml(msg.timestamp)}</div>`;
+    return div;
+  }
+
+  function appendMessage(msg) {
+    const notice = document.getElementById("empty-notice");
+    if (notice) notice.remove();
+    container.appendChild(buildBubble(msg));
+    if (msg.pk > lastId) lastId = msg.pk;
+    scrollBottom();
+  }
+
+  function getCsrf() {
+    return form.querySelector("[name=csrfmiddlewaretoken]").value;
+  }
+
+  // ── send via AJAX ─────────────────────────────────────────────────────────
+
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const text = input.value.trim();
+    if (!text) return;
+
+    errBox.style.display = "none";
+    input.disabled = true;
+
+    try {
+      const fd = new FormData();
+      fd.append("text", text);
+      fd.append("csrfmiddlewaretoken", getCsrf());
+
+      const res = await fetch(sendUrl, { method: "POST", body: fd });
+      const data = await res.json();
+
+      if (!res.ok) {
+        errBox.textContent = data.error || "Failed to send message.";
+        errBox.style.display = "block";
+        return;
+      }
+
+      // Append own message immediately
+      appendMessage({
+        id:              data.id,
+        text:            data.text,
+        sender_role:     data.sender_role,
+        sender_username: "You",
+        is_mine:         true,
+        timestamp:       data.timestamp,
+      });
+      if (data.id > lastId) lastId = data.id;
+      input.value = "";
+
+    } catch (err) {
+      errBox.textContent = "Network error. Please try again.";
+      errBox.style.display = "block";
+    } finally {
+      input.disabled = false;
+      input.focus();
+    }
+  });
+
+  // Send on Ctrl+Enter / Cmd+Enter
+  input.addEventListener("keydown", function (e) {
+    if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
+      e.preventDefault();
+      form.dispatchEvent(new Event("submit", { cancelable: true }));
+    }
+  });
+
+  // ── poll for new messages from the other person ───────────────────────────
+
+  async function poll() {
+    try {
+      const res = await fetch(`${pollUrl}?after=${lastId}`);
+      if (!res.ok) return;
+      const data = await res.json();
+      data.messages.forEach(function (msg) {
+        if (!msg.is_mine) {          // own messages already appended on send
+          appendMessage(msg);
+        }
+        if (msg.id > lastId) lastId = msg.id;
+      });
+    } catch (_) { /* ignore network errors during polling */ }
+  }
+
+  // Initial scroll
+  scrollBottom();
+
+  // Poll every 3 seconds
+  setInterval(poll, 3000);
+})();
+</script>
+{% endif %}
+{% endblock %}

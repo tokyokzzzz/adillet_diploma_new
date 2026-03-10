@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Login — StudyBridge{% endblock %}
+
+{% block content %}
+<div class="auth-wrapper">
+  <div class="auth-card">
+    <h2>Welcome back</h2>
+    <p class="subtitle">Login to your StudyBridge account.</p>
+
+    <form method="post" novalidate>
+      {% csrf_token %}
+
+      <div class="mb-3">
+        <label for="id_username" class="form-label fw-semibold small">Username</label>
+        <input
+          type="text"
+          name="username"
+          id="id_username"
+          class="form-control {% if form.non_field_errors %}is-invalid{% endif %}"
+          autofocus
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="id_password" class="form-label fw-semibold small">Password</label>
+        <input
+          type="password"
+          name="password"
+          id="id_password"
+          class="form-control {% if form.non_field_errors %}is-invalid{% endif %}"
+        />
+        {% if form.non_field_errors %}
+          <div class="invalid-feedback d-block">
+            Invalid username or password.
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="d-grid mt-4">
+        <button type="submit" class="btn btn-primary">Login</button>
+      </div>
+    </form>
+
+    <p class="text-center text-muted small mt-3">
+      Don't have an account?
+      <a href="{% url 'signup' %}" class="text-primary">Sign up</a>
+    </p>
+  </div>
+</div>
+{% endblock %}

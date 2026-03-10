@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %}{{ mentor.full_name }} — StudyBridge{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+
+      <a href="{% url 'mentor_list' %}" class="text-muted small">
+        <i class="bi bi-arrow-left me-1"></i>Back to mentors
+      </a>
+
+      <div class="card mt-3">
+        <div class="card-body p-4">
+
+          <!-- Header -->
+          <div class="d-flex justify-content-between align-items-start mb-4">
+            <div>
+              <h2 class="fw-bold mb-1">{{ mentor.full_name }}</h2>
+              <div class="text-muted">
+                <i class="bi bi-geo-alt me-1"></i>{{ mentor.current_country }}
+              </div>
+            </div>
+            {% if mentor.is_verified %}
+              <span class="badge bg-success fs-6 px-3 py-2">
+                <i class="bi bi-patch-check-fill me-1"></i>Verified Mentor
+              </span>
+            {% else %}
+              <span class="badge bg-secondary px-3 py-2">
+                <i class="bi bi-patch-question me-1"></i>Unverified
+              </span>
+            {% endif %}
+          </div>
+
+          <!-- Details grid -->
+          <div class="row g-3 mb-4">
+            <div class="col-sm-6">
+              <div class="p-3 rounded bg-light">
+                <div class="text-muted small mb-1">University</div>
+                <div class="fw-semibold">{{ mentor.university_name }}</div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="p-3 rounded bg-light">
+                <div class="text-muted small mb-1">Degree Level</div>
+                <div class="fw-semibold">{{ mentor.get_degree_level_display|default:"—" }}</div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="p-3 rounded bg-light">
+                <div class="text-muted small mb-1">Major / Field of Study</div>
+                <div class="fw-semibold">{{ mentor.major }}</div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="p-3 rounded bg-light">
+                <div class="text-muted small mb-1">Year of Study</div>
+                <div class="fw-semibold">{{ mentor.get_year_of_study_display|default:"—" }}</div>
+              </div>
+            </div>
+            {% if mentor.languages %}
+              <div class="col-12">
+                <div class="p-3 rounded bg-light">
+                  <div class="text-muted small mb-1">Languages</div>
+                  <div class="fw-semibold">
+                    <i class="bi bi-translate me-1 text-primary"></i>{{ mentor.languages }}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          </div>
+
+          <!-- Bio -->
+          {% if mentor.bio %}
+            <div class="mb-4">
+              <h6 class="fw-semibold text-muted text-uppercase small mb-2">About</h6>
+              <p class="mb-0" style="line-height: 1.7;">{{ mentor.bio }}</p>
+            </div>
+          {% endif %}
+
+          <!-- Contact action -->
+          <div class="border-top pt-4">
+            {% if user.is_authenticated %}
+              {% if user.is_applicant %}
+                <form method="post" action="{% url 'start_chat' mentor.pk %}" class="d-inline">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-primary px-4">
+                    <i class="bi bi-chat-dots me-2"></i>Send Chat Request
+                  </button>
+                </form>
+                <p class="text-muted small mt-2 mb-0">
+                  The mentor will receive your request and can accept or decline.
+                </p>
+              {% elif user.is_mentor %}
+                <p class="text-muted small mb-0">
+                  <i class="bi bi-info-circle me-1"></i>
+                  You are viewing as a mentor. Only applicants can contact mentors.
+                </p>
+              {% endif %}
+            {% else %}
+              <p class="text-muted small mb-2">
+                <i class="bi bi-lock me-1"></i>
+                Login as an applicant to contact this mentor.
+              </p>
+              <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-primary px-4">
+                Login to Contact
+              </a>
+              <a href="{% url 'signup' %}" class="btn btn-outline-primary ms-2 px-4">
+                Create Account
+              </a>
+            {% endif %}
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
