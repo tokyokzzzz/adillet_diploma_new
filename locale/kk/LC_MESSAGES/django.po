@@ -1,0 +1,127 @@
+# Kazakh translations for StudyBridge
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: kk\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+# Navbar
+msgid "Mentors"
+msgstr "Тәлімгерлер"
+
+msgid "Chats"
+msgstr "Чаттар"
+
+msgid "Calculator"
+msgstr "Калькулятор"
+
+msgid "Dashboard"
+msgstr "Басқару тақтасы"
+
+msgid "Profile"
+msgstr "Профиль"
+
+msgid "Logout"
+msgstr "Шығу"
+
+msgid "Login"
+msgstr "Кіру"
+
+msgid "Sign Up"
+msgstr "Тіркелу"
+
+# Home page
+msgid "Connect with Mentors Who've Been There"
+msgstr "Тәжірибелі тәлімгерлермен байланысыңыз"
+
+msgid "StudyBridge connects international students with verified mentors studying or working abroad. Get real advice, not brochures."
+msgstr "StudyBridge халықаралық студенттерді шетелде оқитын немесе жұмыс істейтін расталған тәлімгерлермен байланыстырады. Нақты кеңес алыңыз."
+
+msgid "Find a Mentor"
+msgstr "Тәлімгер табу"
+
+msgid "How It Works"
+msgstr "Қалай жұмыс істейді"
+
+msgid "Browse Mentors"
+msgstr "Тәлімгерлерді қарау"
+
+msgid "Send a Request"
+msgstr "Сұраныс жіберу"
+
+msgid "Chat & Get Advice"
+msgstr "Кеңес алу"
+
+msgid "Browse verified mentors by country, university, or field of study."
+msgstr "Расталған тәлімгерлерді ел, университет немесе мамандық бойынша қараңыз."
+
+msgid "Send a chat request to a mentor. They'll accept if they can help."
+msgstr "Тәлімгерге чат сұранысын жіберіңіз. Олар көмектесе алса қабылдайды."
+
+msgid "Chat directly and get honest answers from someone who's been through it."
+msgstr "Тікелей чатта сөйлесіп, осы жолдан өткен адамнан шынайы жауап алыңыз."
+
+msgid "Why StudyBridge"
+msgstr "Неге StudyBridge"
+
+msgid "Mentor Directory"
+msgstr "Тәлімгерлер каталогы"
+
+msgid "Filter by country, university, and major to find your perfect match."
+msgstr "Ел, университет және мамандық бойынша сүзіп, өзіңізге сәйкес тәлімгер табыңыз."
+
+msgid "Direct Messaging"
+msgstr "Тікелей хабар алмасу"
+
+msgid "Chat directly with mentors — no middleman, no delays."
+msgstr "Тәлімгерлермен тікелей сөйлесіңіз — делдалсыз, кешіктіруссіз."
+
+msgid "Cost Calculator"
+msgstr "Шығын калькуляторы"
+
+msgid "Estimate living and tuition costs before you apply."
+msgstr "Өтінім бермес бұрын тіршілік пен оқу шығындарын есептеңіз."
+
+msgid "Verified Mentors"
+msgstr "Расталған тәлімгерлер"
+
+msgid "Every mentor is reviewed by our team before going live."
+msgstr "Әрбір тәлімгер жариялаудан бұрын біздің команда тарапынан тексеріледі."
+
+msgid "Ready to find your mentor?"
+msgstr "Тәлімгер табуға дайынсыз ба?"
+
+msgid "Join thousands of students making smarter study abroad decisions."
+msgstr "Шетелде оқу туралы ақылды шешімдер қабылдайтын мыңдаған студенттерге қосылыңыз."
+
+msgid "Get Started"
+msgstr "Бастау"
+
+msgid "View All Mentors"
+msgstr "Барлық тәлімгерлерді қарау"
+
+# Common
+msgid "My Chats"
+msgstr "Менің чаттарым"
+
+msgid "Active"
+msgstr "Белсенді"
+
+msgid "Pending"
+msgstr "Күтуде"
+
+msgid "Declined"
+msgstr "Қабылданбады"
+
+msgid "Accept"
+msgstr "Қабылдау"
+
+msgid "Decline"
+msgstr "Бас тарту"
+
+msgid "Send"
+msgstr "Жіберу"
+
+msgid "Back"
+msgstr "Артқа"
