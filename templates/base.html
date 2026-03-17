@@ -45,13 +45,6 @@
                 <i class="bi bi-chat-dots me-1"></i>{% trans "Chats" %}
               </a>
             </li>
-            {% if user.is_applicant %}
-              <li class="nav-item">
-                <a class="nav-link {% if request.resolver_match.url_name == 'calculator' %}active{% endif %}" href="{% url 'calculator' %}">
-                  <i class="bi bi-calculator me-1"></i>{% trans "Calculator" %}
-                </a>
-              </li>
-            {% endif %}
             {% if user.is_mentor %}
               <li class="nav-item">
                 <a class="nav-link {% if request.resolver_match.url_name == 'mentor_dashboard' %}active{% endif %}" href="{% url 'mentor_dashboard' %}">
@@ -67,6 +60,11 @@
               <li class="nav-item">
                 <a class="nav-link {% if request.resolver_match.url_name == 'applicant_dashboard' %}active{% endif %}" href="{% url 'applicant_dashboard' %}">
                   <i class="bi bi-speedometer2 me-1"></i>{% trans "Dashboard" %}
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link {% if request.resolver_match.url_name == 'saved_mentors' %}active{% endif %}" href="{% url 'saved_mentors' %}">
+                  <i class="bi bi-bookmark me-1"></i>{% trans "Saved" %}
                 </a>
               </li>
               <li class="nav-item">
@@ -129,7 +127,7 @@
   <!-- Footer -->
   <footer>
     <div class="container text-center">
-      &copy; 2026 StudyBridge &mdash; Connecting Students Worldwide
+      &copy; 2026 StudyBridge &mdash; {% trans "Connecting Students Worldwide" %}
     </div>
   </footer>
 

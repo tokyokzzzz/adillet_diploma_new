@@ -47,6 +47,27 @@ class Conversation(models.Model):
         return f"{self.applicant.username} ↔ {self.mentor.username} [{self.status}]"
 
 
+class MentorReview(models.Model):
+    conversation = models.OneToOneField(
+        "Conversation", on_delete=models.CASCADE, related_name="review"
+    )
+    applicant = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="given_reviews"
+    )
+    mentor = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="received_reviews"
+    )
+    rating = models.PositiveSmallIntegerField()  # 1–5
+    text = models.TextField(max_length=500)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"Review by {self.applicant.username} for {self.mentor.username} ({self.rating}★)"
+
+
 class Message(models.Model):
     conversation = models.ForeignKey(
         Conversation, on_delete=models.CASCADE, related_name="messages"

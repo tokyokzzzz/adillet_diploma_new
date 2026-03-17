@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
+from django.utils.translation import gettext_lazy as _
 from .forms import SignupForm
 from .models import User
 
@@ -15,7 +16,7 @@ def signup_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            messages.success(request, f"Welcome, {user.username}! Your account has been created.")
+            messages.success(request, _("Welcome, %(username)s! Your account has been created.") % {"username": user.username})
             return redirect_by_role(user)
     else:
         form = SignupForm()
@@ -34,7 +35,7 @@ def login_view(request):
             login(request, user)
             return redirect_by_role(user)
         else:
-            messages.error(request, "Invalid username or password.")
+            messages.error(request, _("Invalid username or password."))
     else:
         form = AuthenticationForm()
 

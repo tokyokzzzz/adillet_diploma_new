@@ -1,13 +1,14 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}My Chats — StudyBridge{% endblock %}
+{% block title %}{% trans "My Chats" %} — StudyBridge{% endblock %}
 
 {% block content %}
 
 <div class="dashboard-header">
   <div class="container">
-    <h1><i class="bi bi-chat-dots me-2 text-primary"></i>My Chats</h1>
-    <p class="text-muted mb-0 small">Your conversations and pending requests.</p>
+    <h1><i class="bi bi-chat-dots me-2 text-primary"></i>{% trans "My Chats" %}</h1>
+    <p class="text-muted mb-0 small">{% trans "Your conversations and pending requests." %}</p>
   </div>
 </div>
 
@@ -16,9 +17,8 @@
     <div class="col-lg-7">
 
       {% if user.is_mentor and pending %}
-        <!-- Pending requests section (mentor only) -->
         <h6 class="text-uppercase small fw-semibold text-muted mb-2 mt-2">
-          <i class="bi bi-hourglass-split me-1"></i>Pending Requests
+          <i class="bi bi-hourglass-split me-1"></i>{% trans "Pending Requests" %}
           <span class="badge bg-warning text-dark ms-1">{{ pending|length }}</span>
         </h6>
         <div class="list-group mb-4">
@@ -29,22 +29,22 @@
                   {% with ap=conv.applicant.applicant_profile %}
                     <div class="fw-semibold">
                       {{ ap.full_name|default:conv.applicant.username }}
-                      <span class="badge bg-secondary ms-1" style="font-size:0.65rem;">Applicant</span>
+                      <span class="badge bg-secondary ms-1" style="font-size:0.65rem;">{% trans "Applicant" %}</span>
                     </div>
                     <div class="text-muted small mt-1">
-                      {% if ap.target_country %}Interested in {{ ap.target_country }}{% endif %}
+                      {% if ap.target_country %}{% blocktrans with country=ap.target_country %}Interested in {{ country }}{% endblocktrans %}{% endif %}
                       {% if ap.intended_major %}&mdash; {{ ap.intended_major }}{% endif %}
                     </div>
                   {% endwith %}
                   <div class="text-muted small">
-                    Sent {{ conv.created_at|date:"N j, Y" }}
+                    {% trans "Sent" %} {{ conv.created_at|date:"N j, Y" }}
                   </div>
                 </div>
                 <div class="d-flex gap-2 flex-shrink-0 ms-3">
                   <form method="post" action="{% url 'accept_chat' conv.pk %}">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-success btn-sm px-3">
-                      <i class="bi bi-check-lg me-1"></i>Accept
+                      <i class="bi bi-check-lg me-1"></i>{% trans "Accept" %}
                     </button>
                   </form>
                   <form method="post" action="{% url 'decline_chat' conv.pk %}">
@@ -61,9 +61,8 @@
       {% endif %}
 
       {% if user.is_applicant and pending %}
-        <!-- Pending section for applicants -->
         <h6 class="text-uppercase small fw-semibold text-muted mb-2 mt-2">
-          <i class="bi bi-hourglass-split me-1"></i>Awaiting Response
+          <i class="bi bi-hourglass-split me-1"></i>{% trans "Awaiting Response" %}
         </h6>
         <div class="list-group mb-4">
           {% for conv in pending %}
@@ -73,14 +72,12 @@
                   {% with mp=conv.mentor.mentor_profile %}
                     <div class="fw-semibold">
                       {{ mp.full_name|default:conv.mentor.username }}
-                      <span class="badge bg-primary ms-1" style="font-size:0.65rem;">Mentor</span>
+                      <span class="badge bg-primary ms-1" style="font-size:0.65rem;">{% trans "Mentor" %}</span>
                     </div>
-                    <div class="text-muted small mt-1">
-                      {% if mp.university_name %}{{ mp.university_name }}{% endif %}
-                    </div>
+                    <div class="text-muted small mt-1">{% if mp.university_name %}{{ mp.university_name }}{% endif %}</div>
                   {% endwith %}
                 </div>
-                <span class="badge bg-warning text-dark flex-shrink-0 ms-3">Pending</span>
+                <span class="badge bg-warning text-dark flex-shrink-0 ms-3">{% trans "Pending" %}</span>
               </div>
             </a>
           {% endfor %}
@@ -88,28 +85,24 @@
       {% endif %}
 
       {% if active %}
-        <!-- Active chats -->
         <h6 class="text-uppercase small fw-semibold text-muted mb-2 {% if not pending %}mt-2{% endif %}">
-          <i class="bi bi-chat-dots me-1"></i>Active Chats
+          <i class="bi bi-chat-dots me-1"></i>{% trans "Active Chats" %}
         </h6>
         <div class="list-group mb-4">
           {% for conv in active %}
-            <a
-              href="{% url 'conversation_detail' conv.pk %}"
-              class="list-group-item list-group-item-action py-3"
-            >
+            <a href="{% url 'conversation_detail' conv.pk %}" class="list-group-item list-group-item-action py-3">
               <div class="d-flex justify-content-between align-items-start">
                 <div>
                   <div class="fw-semibold">
                     {% if conv.applicant == user %}
                       {% with mp=conv.mentor.mentor_profile %}
                         {{ mp.full_name|default:conv.mentor.username }}
-                        <span class="badge bg-primary ms-1" style="font-size:0.65rem;">Mentor</span>
+                        <span class="badge bg-primary ms-1" style="font-size:0.65rem;">{% trans "Mentor" %}</span>
                       {% endwith %}
                     {% else %}
                       {% with ap=conv.applicant.applicant_profile %}
                         {{ ap.full_name|default:conv.applicant.username }}
-                        <span class="badge bg-secondary ms-1" style="font-size:0.65rem;">Applicant</span>
+                        <span class="badge bg-secondary ms-1" style="font-size:0.65rem;">{% trans "Applicant" %}</span>
                       {% endwith %}
                     {% endif %}
                   </div>
@@ -117,16 +110,12 @@
                     {% if conv.last_message %}
                       {{ conv.last_message.text|truncatechars:70 }}
                     {% else %}
-                      <em>No messages yet — say hello!</em>
+                      <em>{% trans "No messages yet — say hello!" %}</em>
                     {% endif %}
                   </div>
                 </div>
                 <div class="text-muted small text-nowrap ms-3">
-                  {% if conv.last_message %}
-                    {{ conv.last_message.timestamp|date:"M j" }}
-                  {% else %}
-                    {{ conv.created_at|date:"M j" }}
-                  {% endif %}
+                  {% if conv.last_message %}{{ conv.last_message.timestamp|date:"M j" }}{% else %}{{ conv.created_at|date:"M j" }}{% endif %}
                 </div>
               </div>
             </a>
@@ -135,10 +124,9 @@
       {% endif %}
 
       {% if declined %}
-        <!-- Declined (applicant view only) -->
         {% if user.is_applicant %}
           <h6 class="text-uppercase small fw-semibold text-muted mb-2">
-            <i class="bi bi-x-circle me-1"></i>Declined
+            <i class="bi bi-x-circle me-1"></i>{% trans "Declined" %}
           </h6>
           <div class="list-group mb-4">
             {% for conv in declined %}
@@ -147,7 +135,7 @@
                   {% with mp=conv.mentor.mentor_profile %}
                     <div class="small">{{ mp.full_name|default:conv.mentor.username }}</div>
                   {% endwith %}
-                  <span class="badge bg-danger ms-3 flex-shrink-0">Declined</span>
+                  <span class="badge bg-danger ms-3 flex-shrink-0">{% trans "Declined" %}</span>
                 </div>
               </div>
             {% endfor %}
@@ -158,11 +146,9 @@
       {% if not pending and not active and not declined %}
         <div class="text-center py-5">
           <i class="bi bi-chat-square text-muted" style="font-size: 3rem;"></i>
-          <p class="text-muted mt-3 mb-1">No conversations yet.</p>
+          <p class="text-muted mt-3 mb-1">{% trans "No conversations yet." %}</p>
           {% if user.is_applicant %}
-            <a href="{% url 'mentor_list' %}" class="btn btn-primary btn-sm mt-2">
-              Browse Mentors
-            </a>
+            <a href="{% url 'mentor_list' %}" class="btn btn-primary btn-sm mt-2">{% trans "Browse Mentors" %}</a>
           {% endif %}
         </div>
       {% endif %}

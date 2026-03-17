@@ -4,20 +4,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: kk\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-# Navbar
 msgid "Mentors"
-msgstr "Тәлімгерлер"
+msgstr "Тьюторлар"
 
 msgid "Chats"
 msgstr "Чаттар"
 
-msgid "Calculator"
-msgstr "Калькулятор"
-
 msgid "Dashboard"
 msgstr "Басқару тақтасы"
+
+msgid "Saved"
+msgstr "Сақталған"
 
 msgid "Profile"
 msgstr "Профиль"
@@ -31,97 +30,662 @@ msgstr "Кіру"
 msgid "Sign Up"
 msgstr "Тіркелу"
 
-# Home page
-msgid "Connect with Mentors Who've Been There"
-msgstr "Тәжірибелі тәлімгерлермен байланысыңыз"
+msgid "Connecting Students Worldwide"
+msgstr "Дүниежүзілік студенттерді байланыстыру"
 
-msgid "StudyBridge connects international students with verified mentors studying or working abroad. Get real advice, not brochures."
-msgstr "StudyBridge халықаралық студенттерді шетелде оқитын немесе жұмыс істейтін расталған тәлімгерлермен байланыстырады. Нақты кеңес алыңыз."
+msgid "Study Abroad with Real Mentors"
+msgstr "Нақты тьюторлармен шетелде оқу"
 
-msgid "Find a Mentor"
-msgstr "Тәлімгер табу"
+msgid "Student Mentorship Platform"
+msgstr "Студенттік тьюторлық платформа"
+
+msgid "Connect with students already studying abroad"
+msgstr "Шетелде оқып жатқан студенттермен байланысыңыз"
+
+msgid "StudyBridge links international applicants with real student mentors who have been through the process — get honest advice on applications, university life, and studying in your target country."
+msgstr "StudyBridge шетелде оқып жатқан нақты студент тьюторларымен байланыстырады — өтініш беру, университет өмірі және мақсатты елде оқу туралы шынайы кеңес алыңыз."
+
+msgid "Get Started — It's Free"
+msgstr "Бастау — Тегін"
+
+msgid "Go to Dashboard"
+msgstr "Басқару тақтасына өту"
+
+msgid "Countries"
+msgstr "Елдер"
+
+msgid "Verified Mentors"
+msgstr "Расталған тьюторлар"
+
+msgid "Students Helped"
+msgstr "Көмек алған студенттер"
 
 msgid "How It Works"
 msgstr "Қалай жұмыс істейді"
 
-msgid "Browse Mentors"
-msgstr "Тәлімгерлерді қарау"
+msgid "Three steps to connect with the right mentor for your goals."
+msgstr "Мақсатыңызға сай тьюторды табудың үш қадамы."
 
-msgid "Send a Request"
-msgstr "Сұраныс жіберу"
+msgid "1. Create an Account"
+msgstr "1. Тіркелу"
 
-msgid "Chat & Get Advice"
-msgstr "Кеңес алу"
+msgid "Sign up as an applicant looking for guidance or as a mentor currently studying abroad."
+msgstr "Нұсқаулық іздеген үміткер немесе шетелде оқып жатқан тьютор ретінде тіркеліңіз."
 
-msgid "Browse verified mentors by country, university, or field of study."
-msgstr "Расталған тәлімгерлерді ел, университет немесе мамандық бойынша қараңыз."
+msgid "2. Find Your Mentor"
+msgstr "2. Тьюторыңызды табыңыз"
 
-msgid "Send a chat request to a mentor. They'll accept if they can help."
-msgstr "Тәлімгерге чат сұранысын жіберіңіз. Олар көмектесе алса қабылдайды."
+msgid "Browse and filter mentors by country, university, degree, and field of study to find the best match."
+msgstr "Ең жақсы сәйкестікті табу үшін ел, университет, дәреже және оқу саласы бойынша тьюторларды шолыңыз және сүзіңіз."
 
-msgid "Chat directly and get honest answers from someone who's been through it."
-msgstr "Тікелей чатта сөйлесіп, осы жолдан өткен адамнан шынайы жауап алыңыз."
+msgid "3. Get Real Advice"
+msgstr "3. Нақты кеңес алыңыз"
 
-msgid "Why StudyBridge"
-msgstr "Неге StudyBridge"
+msgid "Start a direct conversation. Ask about applications, visas, housing, academic requirements, and life abroad."
+msgstr "Тікелей сөйлесу бастаңыз. Өтініштер, визалар, тұрғын үй, академиялық талаптар және шетелдегі өмір туралы сұраңыз."
+
+msgid "Connect with Real Students"
+msgstr "Нақты студенттермен байланысыңыз"
+
+msgid "Talk to students who are already studying abroad and understand the real process. Get honest guidance based on real experience."
+msgstr "Шетелде оқып жатқан және нақты процесті түсінетін студенттермен сөйлесіңіз. Нақты тәжірибеге негізделген шынайы нұсқаулық алыңыз."
+
+msgid "Search and Compare Mentors"
+msgstr "Тьюторларды іздеу және салыстыру"
+
+msgid "Use filters to find mentors by country, university, and field of study. Compare profiles and choose the best match for your goals."
+msgstr "Ел, университет және оқу саласы бойынша тьюторларды табу үшін сүзгілерді пайдаланыңыз. Профильдерді салыстырып, мақсатыңызға ең жақсы сәйкестікті таңдаңыз."
+
+msgid "Get Guidance Through Chat"
+msgstr "Чат арқылы нұсқаулық алыңыз"
+
+msgid "Start a conversation with your mentor and ask about applications, visas, university life, and studying abroad."
+msgstr "Тьюторыңызбен сөйлесу бастаңыз және өтініштер, визалар, университет өмірі және шетелде оқу туралы сұраңыз."
+
+msgid "Everything You Need"
+msgstr "Қажет нәрсенің бәрі"
+
+msgid "Tools built for international applicants at every stage."
+msgstr "Әр кезеңдегі халықаралық үміткерлер үшін жасалған құралдар."
 
 msgid "Mentor Directory"
-msgstr "Тәлімгерлер каталогы"
+msgstr "Тьюторлар каталогы"
 
-msgid "Filter by country, university, and major to find your perfect match."
-msgstr "Ел, университет және мамандық бойынша сүзіп, өзіңізге сәйкес тәлімгер табыңыз."
+msgid "Search verified student mentors by country, university, and major."
+msgstr "Расталған студент тьюторларын ел, университет және мамандық бойынша іздеңіз."
 
 msgid "Direct Messaging"
 msgstr "Тікелей хабар алмасу"
 
-msgid "Chat directly with mentors — no middleman, no delays."
-msgstr "Тәлімгерлермен тікелей сөйлесіңіз — делдалсыз, кешіктіруссіз."
+msgid "Start private conversations with mentors and get personal guidance."
+msgstr "Тьюторлармен жеке сөйлесу бастап, жеке нұсқаулық алыңыз."
 
-msgid "Cost Calculator"
-msgstr "Шығын калькуляторы"
+msgid "Acceptance Calculator"
+msgstr "Қабылдану калькуляторы"
 
-msgid "Estimate living and tuition costs before you apply."
-msgstr "Өтінім бермес бұрын тіршілік пен оқу шығындарын есептеңіз."
+msgid "Estimate your admission chances using a transparent weighted formula."
+msgstr "Мөлдір салмақтық формуланы пайдаланып, қабылдану мүмкіндіктеріңізді бағалаңыз."
 
-msgid "Verified Mentors"
-msgstr "Расталған тәлімгерлер"
+msgid "Mentors with confirmed student enrollment carry a verified badge."
+msgstr "Расталған студент тіркеуі бар тьюторларда расталған белгі бар."
 
-msgid "Every mentor is reviewed by our team before going live."
-msgstr "Әрбір тәлімгер жариялаудан бұрын біздің команда тарапынан тексеріледі."
+msgid "Ready to start your journey?"
+msgstr "Жолыңызды бастауға дайынсыз ба?"
 
-msgid "Ready to find your mentor?"
-msgstr "Тәлімгер табуға дайынсыз ба?"
+msgid "Join StudyBridge today — free for applicants. Start chatting with mentors in minutes."
+msgstr "StudyBridge-ке бүгін қосылыңыз — үміткерлер үшін тегін. Бірнеше минут ішінде тьюторлармен сөйлесуді бастаңыз."
 
-msgid "Join thousands of students making smarter study abroad decisions."
-msgstr "Шетелде оқу туралы ақылды шешімдер қабылдайтын мыңдаған студенттерге қосылыңыз."
+msgid "Create Free Account"
+msgstr "Тегін аккаунт жасау"
 
-msgid "Get Started"
-msgstr "Бастау"
+msgid "Browse Mentors"
+msgstr "Тьюторларды қарау"
 
-msgid "View All Mentors"
-msgstr "Барлық тәлімгерлерді қарау"
+msgid "Connect with real students"
+msgstr "Нақты студенттермен байланысыңыз"
 
-# Common
+msgid "Search and compare mentors"
+msgstr "Тьюторларды іздеу және салыстыру"
+
+msgid "Get guidance through chat"
+msgstr "Чат арқылы нұсқаулық алыңыз"
+
+msgid "Welcome back"
+msgstr "Қайта оралдыңыз"
+
+msgid "Login to your StudyBridge account."
+msgstr "StudyBridge аккаунтыңызға кіріңіз."
+
+msgid "Username"
+msgstr "Пайдаланушы аты"
+
+msgid "Password"
+msgstr "Құпиясөз"
+
+msgid "Invalid username or password."
+msgstr "Пайдаланушы аты немесе құпиясөз қате."
+
+msgid "Don't have an account?"
+msgstr "Тіркелмедіңіз бе?"
+
+msgid "Sign up"
+msgstr "Тіркелу"
+
+msgid "Create an account"
+msgstr "Тіркелу"
+
+msgid "Join StudyBridge to connect with mentors worldwide."
+msgstr "Дүниежүзілік тьюторлармен байланысу үшін StudyBridge-ке қосылыңыз."
+
+msgid "Create Account"
+msgstr "Аккаунт жасау"
+
+msgid "Already have an account?"
+msgstr "Аккаунтыңыз бар ма?"
+
+msgid "Applicant — I want to study abroad"
+msgstr "Үміткер — Мен шетелде оқығым келеді"
+
+msgid "Mentor — I'm already studying abroad"
+msgstr "Тьютор — Мен шетелде оқып жатырмын"
+
+msgid "Welcome, %(username)s! Your account has been created."
+msgstr "Қош келдіңіз, %(username)s! Аккаунтыңыз жасалды."
+
+msgid "Welcome, %(name)s"
+msgstr "Қош келдіңіз, %(name)s"
+
+msgid "Applicant dashboard — find mentors and plan your journey abroad."
+msgstr "Үміткер басқару тақтасы — тьюторларды табыңыз және шетелге жол жоспарыңызды жасаңыз."
+
+msgid "Your profile is incomplete."
+msgstr "Профиліңіз толық емес."
+
+msgid "Complete it"
+msgstr "Толтырыңыз"
+
+msgid "so mentors can better understand your goals."
+msgstr "тьюторлар мақсатыңызды жақсы түсіне алсын."
+
+msgid "My Profile"
+msgstr "Менің профилім"
+
+msgid "Full name"
+msgstr "Толық аты"
+
+msgid "From"
+msgstr "Қайдан"
+
+msgid "Target country"
+msgstr "Мақсатты ел"
+
+msgid "Degree"
+msgstr "Дәреже"
+
+msgid "Intended major"
+msgstr "Жоспарланған мамандық"
+
+msgid "Preferred language"
+msgstr "Қалаулы тіл"
+
+msgid "Edit Profile"
+msgstr "Профильді өңдеу"
+
+msgid "Find mentors by country, university, and field of study."
+msgstr "Тьюторларды ел, университет және оқу саласы бойынша табыңыз."
+
 msgid "My Chats"
 msgstr "Менің чаттарым"
 
-msgid "Active"
-msgstr "Белсенді"
+msgid "View All"
+msgstr "Барлығын қарау"
+
+msgid "No active conversations yet."
+msgstr "Белсенді сөйлесулер жоқ."
+
+msgid "Find a mentor"
+msgstr "Тьютор табыңыз"
+
+msgid "and start your first chat."
+msgstr "және бірінші чатыңызды бастаңыз."
+
+msgid "Recommended Mentors for You"
+msgstr "Сізге ұсынылған тьюторлар"
+
+msgid "Verified"
+msgstr "Расталған"
+
+msgid "View Profile"
+msgstr "Профильді қарау"
+
+msgid "No recommendations yet."
+msgstr "Ұсыныстар жоқ."
+
+msgid "Update your profile"
+msgstr "Профильді жаңартыңыз"
+
+msgid "with your target country, degree, and major to get matched."
+msgstr "сәйкестікті алу үшін мақсатты ел, дәреже және мамандықты толтырыңыз."
+
+msgid "Mentor Dashboard"
+msgstr "Тьютор басқару тақтасы"
+
+msgid "Mentor dashboard — help applicants find their path to studying abroad."
+msgstr "Тьютор басқару тақтасы — үміткерлерге шетелде оқудың жолын табуға көмектесіңіз."
+
+msgid "so applicants can find and contact you."
+msgstr "үміткерлер сізді таба алсын және сізбен хабарласа алсын."
+
+msgid "Country"
+msgstr "Ел"
+
+msgid "University"
+msgstr "Университет"
+
+msgid "Major"
+msgstr "Мамандық"
+
+msgid "Year of study"
+msgstr "Оқу жылы"
+
+msgid "Languages"
+msgstr "Тілдер"
+
+msgid "Verified Mentor"
+msgstr "Расталған тьютор"
+
+msgid "Your profile has been verified by admin."
+msgstr "Профиліңіз әкімші тарапынан расталды."
+
+msgid "Verification Pending"
+msgstr "Растау күтілуде"
+
+msgid "Your request is under review."
+msgstr "Өтінішіңіз қарастырылуда."
+
+msgid "Request Rejected"
+msgstr "Өтініш қабылданбады"
+
+msgid "You can resubmit a new request."
+msgstr "Жаңа өтініш жібере аласыз."
+
+msgid "Resubmit Request"
+msgstr "Өтінішті қайта жіберу"
+
+msgid "Not Yet Verified"
+msgstr "Әлі расталмаған"
+
+msgid "Get verified to build applicant trust."
+msgstr "Үміткерлер сенімін арттыру үшін растаңыз."
+
+msgid "Request Verification"
+msgstr "Растауды сұрау"
+
+msgid "Incoming Requests"
+msgstr "Кіріс сұраулар"
+
+msgid "View and respond to applicants who want your guidance."
+msgstr "Нұсқаулығыңызды қалаған үміткерлерді қарап, жауап беріңіз."
+
+msgid "View Requests"
+msgstr "Сұрауларды қарау"
+
+msgid "Continue ongoing conversations with applicants."
+msgstr "Үміткерлермен жалғасып жатқан сөйлесулерді жалғастырыңыз."
+
+msgid "Open Chats"
+msgstr "Чаттарды ашу"
+
+msgid "Public Mentor Card Preview"
+msgstr "Жалпыға қол жетімді тьютор картасының алдын ала қарауы"
+
+msgid "This is how applicants will see you in the mentor list."
+msgstr "Үміткерлер сізді тьюторлар тізімінде осылай көреді."
+
+msgid "Unverified"
+msgstr "Расталмаған"
 
 msgid "Pending"
-msgstr "Күтуде"
+msgstr "Күтілуде"
 
-msgid "Declined"
-msgstr "Қабылданбады"
+msgid "Rejected"
+msgstr "Қабылданбаған"
+
+msgid "Find a student already studying abroad in your target country and field."
+msgstr "Мақсатты елде және саласыңызда оқып жатқан студентті табыңыз."
+
+msgid "All countries"
+msgstr "Барлық елдер"
+
+msgid "All degrees"
+msgstr "Барлық дәрежелер"
+
+msgid "Language"
+msgstr "Тіл"
+
+msgid "Clear filters"
+msgstr "Сүзгілерді тазалау"
+
+msgid "Filtered results:"
+msgstr "Сүзілген нәтижелер:"
+
+msgid "result"
+msgstr "нәтиже"
+
+msgid "Showing %(count)s mentor"
+msgstr "%(count)s тьютор көрсетілуде"
+
+msgid "Showing %(count)s mentors"
+msgstr "%(count)s тьютор көрсетілуде"
+
+msgid "Available"
+msgstr "Қол жетімді"
+
+msgid "Busy"
+msgstr "Бос емес"
+
+msgid "Remove from saved"
+msgstr "Сақталғандардан жою"
+
+msgid "Save mentor"
+msgstr "Тьюторды сақтау"
+
+msgid "No mentors found matching your filters."
+msgstr "Сүзгіге сай тьютор табылмады."
+
+msgid "Back to mentors"
+msgstr "Тьюторларға оралу"
+
+msgid "Degree Level"
+msgstr "Дәреже деңгейі"
+
+msgid "Major / Field of Study"
+msgstr "Мамандық / Оқу саласы"
+
+msgid "Year of Study"
+msgstr "Оқу жылы"
+
+msgid "About"
+msgstr "Туралы"
+
+msgid "Send Chat Request"
+msgstr "Чат сұрауын жіберу"
+
+msgid "This mentor is currently not accepting new requests."
+msgstr "Бұл тьютор қазіргі уақытта жаңа сұрауларды қабылдамайды."
+
+msgid "Save Mentor"
+msgstr "Тьюторды сақтау"
+
+msgid "The mentor will receive your request and can accept or decline."
+msgstr "Тьютор сіздің сұрауыңызды алып, қабылдай немесе бас тарта алады."
+
+msgid "You are viewing as a mentor. Only applicants can contact mentors."
+msgstr "Сіз тьютор ретінде қарап отырсыз. Тек үміткерлер тьюторлармен байланыса алады."
+
+msgid "Login as an applicant to contact this mentor."
+msgstr "Бұл тьютормен байланысу үшін үміткер ретінде кіріңіз."
+
+msgid "Login to Contact"
+msgstr "Байланысу үшін кіру"
+
+msgid "Reviews"
+msgstr "Пікірлер"
+
+msgid "review"
+msgstr "пікір"
+
+msgid "No reviews yet."
+msgstr "Пікірлер жоқ."
+
+msgid "Back to Dashboard"
+msgstr "Басқару тақтасына оралу"
+
+msgid "Edit My Profile"
+msgstr "Профилімді өңдеу"
+
+msgid "Fill in your details so mentors can understand your goals."
+msgstr "Тьюторлар мақсатыңызды түсінуі үшін деректеріңізді толтырыңыз."
+
+msgid "Full Name"
+msgstr "Толық аты"
+
+msgid "Current Country"
+msgstr "Қазіргі ел"
+
+msgid "Target Country"
+msgstr "Мақсатты ел"
+
+msgid "Target Degree"
+msgstr "Мақсатты дәреже"
+
+msgid "— Select —"
+msgstr "— Таңдаңыз —"
+
+msgid "Intended Major"
+msgstr "Жоспарланған мамандық"
+
+msgid "Preferred Language"
+msgstr "Қалаулы тіл"
+
+msgid "Language you prefer to communicate with mentors in."
+msgstr "Тьюторлармен сөйлескіңіз келетін тіл."
+
+msgid "Short Bio"
+msgstr "Қысқаша өзіндік таныстыру"
+
+msgid "Briefly describe your background, goals, and what kind of help you are looking for..."
+msgstr "Өзіңіздің тегіңізді, мақсаттарыңызды және қандай көмек іздейтіндігіңізді қысқаша сипаттаңыз..."
+
+msgid "Max 500 characters."
+msgstr "Ең көп 500 таңба."
+
+msgid "Save Profile"
+msgstr "Профильді сақтау"
+
+msgid "Cancel"
+msgstr "Болдырмау"
+
+msgid "Profile updated successfully."
+msgstr "Профиль сәтті жаңартылды."
+
+msgid "Edit Mentor Profile"
+msgstr "Тьютор профилін өңдеу"
+
+msgid "Keep your details up to date so applicants can find you easily."
+msgstr "Үміткерлер сізді оңай таба алуы үшін деректеріңізді жаңартып отырыңыз."
+
+msgid "University Name"
+msgstr "Университет атауы"
+
+msgid "Languages you can help applicants in."
+msgstr "Үміткерлерге көмектесе алатын тілдеріңіз."
+
+msgid "Availability"
+msgstr "Қол жетімділік"
+
+msgid "Let applicants know if you are accepting new chat requests."
+msgstr "Жаңа чат сұрауларын қабылдайтыныңызды үміткерлерге хабарлаңыз."
+
+msgid "Tell applicants about yourself — your program, experience, what questions you can help with..."
+msgstr "Үміткерлерге өзіңіз туралы айтыңыз — бағдарламаңыз, тәжірибеңіз, қандай сұрақтарда көмектесе алатыныңыз..."
+
+msgid "Mentor Verification"
+msgstr "Тьютор растауы"
+
+msgid "Submit your student enrollment details for manual review. Once approved, a verified badge will appear on your profile."
+msgstr "Қолмен тексеру үшін студент тіркеу деректерін жіберіңіз. Бекітілгеннен кейін профиліңізде расталған белгі пайда болады."
+
+msgid "Current Request Status"
+msgstr "Ағымдағы сұрау мәртебесі"
+
+msgid "Approved"
+msgstr "Бекітілген"
+
+msgid "Your profile is now verified."
+msgstr "Профиліңіз енді расталды."
+
+msgid "Under Review"
+msgstr "Тексерілуде"
+
+msgid "Your request is being reviewed by an admin."
+msgstr "Сіздің сұрауыңызды әкімші қарастырып жатыр."
+
+msgid "Your previous request was not approved. You may resubmit below."
+msgstr "Алдыңғы сұрауыңыз бекітілмеді. Төменде қайта жібере аласыз."
+
+msgid "University submitted"
+msgstr "Жіберілген университет"
+
+msgid "Student ID submitted"
+msgstr "Жіберілген студент идентификаторы"
+
+msgid "Submitted"
+msgstr "Жіберілген"
+
+msgid "Reviewed"
+msgstr "Тексерілген"
+
+msgid "Resubmit Verification Request"
+msgstr "Растау сұрауын қайта жіберу"
+
+msgid "Submit Verification Request"
+msgstr "Растау сұрауын жіберу"
+
+msgid "Provide your university and student ID exactly as they appear on your enrollment confirmation. An admin will review your request manually."
+msgstr "Университет атауы мен студент идентификаторын тіркеу растауындағыдай дәл жазыңыз. Сұрауыңызды әкімші қолмен тексереді."
+
+msgid "Student ID / Enrollment Number"
+msgstr "Студент идентификаторы / Тіркеу нөмірі"
+
+msgid "Additional Note"
+msgstr "Қосымша ескертпе"
+
+msgid "optional"
+msgstr "міндетті емес"
+
+msgid "Submit Request"
+msgstr "Сұрауды жіберу"
+
+msgid "Verification request submitted. We will review it shortly."
+msgstr "Растау сұрауы жіберілді. Жақын арада қарастырамыз."
+
+msgid "Saved Mentors"
+msgstr "Сақталған тьюторлар"
+
+msgid "Mentors you have bookmarked for later."
+msgstr "Кейінге сақтаған тьюторлар."
+
+msgid "Remove"
+msgstr "Жою"
+
+msgid "You have not saved any mentors yet."
+msgstr "Сіз әлі ешбір тьюторды сақтамадыңыз."
+
+msgid "Your conversations and pending requests."
+msgstr "Сіздің сөйлесулеріңіз және күтілуде сұраулар."
+
+msgid "Pending Requests"
+msgstr "Күтілуде сұраулар"
+
+msgid "Applicant"
+msgstr "Үміткер"
+
+msgid "Interested in %(country)s"
+msgstr "%(country)s-ға қызығушылық таныта"
+
+msgid "Sent"
+msgstr "Жіберілді"
 
 msgid "Accept"
 msgstr "Қабылдау"
 
+msgid "Awaiting Response"
+msgstr "Жауап күтілуде"
+
+msgid "Mentor"
+msgstr "Тьютор"
+
+msgid "Active Chats"
+msgstr "Белсенді чаттар"
+
+msgid "No messages yet — say hello!"
+msgstr "Хабарламалар жоқ — сәлем айтыңыз!"
+
+msgid "Declined"
+msgstr "Қабылданбаған"
+
+msgid "No conversations yet."
+msgstr "Сөйлесулер жоқ."
+
+msgid "Active"
+msgstr "Белсенді"
+
+msgid "Your messages"
+msgstr "Сіздің хабарламаларыңыз"
+
+msgid "Chat Request"
+msgstr "Чат сұрауы"
+
+msgid "wants to chat with you."
+msgstr "сізбен сөйлескісі келеді."
+
+msgid "Interested in studying in <strong>%(country)s</strong>"
+msgstr "<strong>%(country)s</strong>-да оқуға қызығушылық таныта"
+
+msgid "Accept Request"
+msgstr "Сұрауды қабылдау"
+
 msgid "Decline"
 msgstr "Бас тарту"
 
-msgid "Send"
-msgstr "Жіберу"
+msgid "Request Sent"
+msgstr "Сұрау жіберілді"
 
-msgid "Back"
-msgstr "Артқа"
+msgid "Your chat request is waiting for the mentor to accept. You will be able to send messages once they accept."
+msgstr "Чат сұрауыңыз тьютордың қабылдауын күтуде. Олар қабылдаған соң хабарлама жіберу мүмкіндігі болады."
+
+msgid "Request Declined"
+msgstr "Сұрау қабылданбады"
+
+msgid "This mentor has declined your chat request. You can browse other mentors who may be a better match."
+msgstr "Бұл тьютор сіздің чат сұрауыңызды қабылдамады. Сізге жақсырақ сай келетін басқа тьюторларды қарай аласыз."
+
+msgid "Browse Other Mentors"
+msgstr "Басқа тьюторларды қарау"
+
+msgid "You declined this chat request."
+msgstr "Сіз бұл чат сұрауынан бас тарттыңыз."
+
+msgid "Chat accepted! Send the first message."
+msgstr "Чат қабылданды! Бірінші хабарламаны жіберіңіз."
+
+msgid "Write a message..."
+msgstr "Хабарлама жазыңыз..."
+
+msgid "You"
+msgstr "Сіз"
+
+msgid "Leave a Review"
+msgstr "Пікір қалдыру"
+
+msgid "Rating"
+msgstr "Рейтинг"
+
+msgid "Review"
+msgstr "Пікір"
+
+msgid "Your review"
+msgstr "Сіздің пікіріңіз"
+
+msgid "Submit Review"
+msgstr "Пікірді жіберу"
+
+msgid "You reviewed this mentor"
+msgstr "Сіз бұл тьюторға пікір бердіңіз"
+
+msgid "Your review has been submitted. Thank you!"
+msgstr "Пікіріңіз жіберілді. Рахмет!"
+
+msgid "Share your experience with this mentor..."
+msgstr "Бұл тьютормен тәжірибеңізді бөлісіңіз..."

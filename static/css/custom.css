@@ -1,11 +1,11 @@
 /* StudyBridge — clean academic style */
 
 :root {
-  --primary: #2563eb;
-  --primary-dark: #1d4ed8;
-  --text-dark: #1e293b;
-  --text-muted: #64748b;
-  --bg-light: #f8fafc;
+  --primary: #3b5bfd;
+  --primary-dark: #2f4fe0;
+  --text-dark: #1f2937;
+  --text-muted: #6b7280;
+  --bg-light: #eef0f4;
   --border: #e2e8f0;
 }
 
@@ -22,6 +22,7 @@ body {
 .navbar {
   border-bottom: 1px solid var(--border);
   background-color: #fff !important;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
 }
 
 .navbar-brand {
@@ -39,6 +40,7 @@ body {
 .nav-link:hover,
 .nav-link.active {
   color: var(--primary) !important;
+  font-weight: 500;
 }
 
 /* Main content */
@@ -48,7 +50,7 @@ main {
 
 /* Hero section */
 .hero {
-  background-color: #1e3a8a;
+  background-color: #1f3bb3;
   color: #fff;
   padding: 5rem 0 4rem;
 }
@@ -63,22 +65,28 @@ main {
 .hero p {
   font-size: 1.1rem;
   opacity: 0.85;
-  max-width: 560px;
+  max-width: 520px;
 }
 
 /* Cards */
 .card {
   border: 1px solid var(--border);
-  border-radius: 10px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
   background: #fff;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
 }
 
 /* Step cards (how it works) */
 .step-card {
   background: #fff;
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 2rem 1.5rem;
   text-align: center;
   height: 100%;
@@ -136,11 +144,30 @@ main {
 .btn-primary {
   background-color: var(--primary);
   border-color: var(--primary);
+  border-radius: 8px;
+  font-weight: 600;
+  padding: 0.5rem 1.25rem;
 }
 
 .btn-primary:hover {
   background-color: var(--primary-dark);
   border-color: var(--primary-dark);
+}
+
+.btn-outline-primary {
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.btn-outline-secondary,
+.btn-outline-danger,
+.btn-outline-light,
+.btn-success,
+.btn-warning,
+.btn-secondary,
+.btn-light {
+  border-radius: 8px;
+  font-weight: 500;
 }
 
 /* Page header */
@@ -162,7 +189,7 @@ main {
 .stat-card {
   background: #fff;
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 1.5rem;
   text-align: center;
 }
@@ -262,6 +289,12 @@ main {
 
 .chat-window .form-control {
   resize: none;
+}
+
+/* Landing page feature images */
+.feature-img {
+  border-radius: 12px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12);
 }
 
 /* Footer */

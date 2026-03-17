@@ -1,7 +1,691 @@
-# English translations for StudyBridge (passthrough)
+# English translations for StudyBridge
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Mentors"
+msgstr ""
+
+msgid "Chats"
+msgstr ""
+
+msgid "Dashboard"
+msgstr ""
+
+msgid "Saved"
+msgstr ""
+
+msgid "Profile"
+msgstr ""
+
+msgid "Logout"
+msgstr ""
+
+msgid "Login"
+msgstr ""
+
+msgid "Sign Up"
+msgstr ""
+
+msgid "Connecting Students Worldwide"
+msgstr ""
+
+msgid "Study Abroad with Real Mentors"
+msgstr ""
+
+msgid "Student Mentorship Platform"
+msgstr ""
+
+msgid "Connect with students already studying abroad"
+msgstr ""
+
+msgid "StudyBridge links international applicants with real student mentors who have been through the process — get honest advice on applications, university life, and studying in your target country."
+msgstr ""
+
+msgid "Get Started — It's Free"
+msgstr ""
+
+msgid "Go to Dashboard"
+msgstr ""
+
+msgid "Countries"
+msgstr ""
+
+msgid "Verified Mentors"
+msgstr ""
+
+msgid "Students Helped"
+msgstr ""
+
+msgid "How It Works"
+msgstr ""
+
+msgid "Three steps to connect with the right mentor for your goals."
+msgstr ""
+
+msgid "1. Create an Account"
+msgstr ""
+
+msgid "Sign up as an applicant looking for guidance or as a mentor currently studying abroad."
+msgstr ""
+
+msgid "2. Find Your Mentor"
+msgstr ""
+
+msgid "Browse and filter mentors by country, university, degree, and field of study to find the best match."
+msgstr ""
+
+msgid "3. Get Real Advice"
+msgstr ""
+
+msgid "Start a direct conversation. Ask about applications, visas, housing, academic requirements, and life abroad."
+msgstr ""
+
+msgid "Connect with Real Students"
+msgstr ""
+
+msgid "Talk to students who are already studying abroad and understand the real process. Get honest guidance based on real experience."
+msgstr ""
+
+msgid "Search and Compare Mentors"
+msgstr ""
+
+msgid "Use filters to find mentors by country, university, and field of study. Compare profiles and choose the best match for your goals."
+msgstr ""
+
+msgid "Get Guidance Through Chat"
+msgstr ""
+
+msgid "Start a conversation with your mentor and ask about applications, visas, university life, and studying abroad."
+msgstr ""
+
+msgid "Everything You Need"
+msgstr ""
+
+msgid "Tools built for international applicants at every stage."
+msgstr ""
+
+msgid "Mentor Directory"
+msgstr ""
+
+msgid "Search verified student mentors by country, university, and major."
+msgstr ""
+
+msgid "Direct Messaging"
+msgstr ""
+
+msgid "Start private conversations with mentors and get personal guidance."
+msgstr ""
+
+msgid "Acceptance Calculator"
+msgstr ""
+
+msgid "Estimate your admission chances using a transparent weighted formula."
+msgstr ""
+
+msgid "Mentors with confirmed student enrollment carry a verified badge."
+msgstr ""
+
+msgid "Ready to start your journey?"
+msgstr ""
+
+msgid "Join StudyBridge today — free for applicants. Start chatting with mentors in minutes."
+msgstr ""
+
+msgid "Create Free Account"
+msgstr ""
+
+msgid "Browse Mentors"
+msgstr ""
+
+msgid "Connect with real students"
+msgstr ""
+
+msgid "Search and compare mentors"
+msgstr ""
+
+msgid "Get guidance through chat"
+msgstr ""
+
+msgid "Welcome back"
+msgstr ""
+
+msgid "Login to your StudyBridge account."
+msgstr ""
+
+msgid "Username"
+msgstr ""
+
+msgid "Password"
+msgstr ""
+
+msgid "Invalid username or password."
+msgstr ""
+
+msgid "Don't have an account?"
+msgstr ""
+
+msgid "Sign up"
+msgstr ""
+
+msgid "Create an account"
+msgstr ""
+
+msgid "Join StudyBridge to connect with mentors worldwide."
+msgstr ""
+
+msgid "Create Account"
+msgstr ""
+
+msgid "Already have an account?"
+msgstr ""
+
+msgid "Applicant — I want to study abroad"
+msgstr ""
+
+msgid "Mentor — I'm already studying abroad"
+msgstr ""
+
+msgid "Welcome, %(username)s! Your account has been created."
+msgstr ""
+
+msgid "Welcome, %(name)s"
+msgstr ""
+
+msgid "Applicant dashboard — find mentors and plan your journey abroad."
+msgstr ""
+
+msgid "Your profile is incomplete."
+msgstr ""
+
+msgid "Complete it"
+msgstr ""
+
+msgid "so mentors can better understand your goals."
+msgstr ""
+
+msgid "My Profile"
+msgstr ""
+
+msgid "Full name"
+msgstr ""
+
+msgid "From"
+msgstr ""
+
+msgid "Target country"
+msgstr ""
+
+msgid "Degree"
+msgstr ""
+
+msgid "Intended major"
+msgstr ""
+
+msgid "Preferred language"
+msgstr ""
+
+msgid "Edit Profile"
+msgstr ""
+
+msgid "Find mentors by country, university, and field of study."
+msgstr ""
+
+msgid "My Chats"
+msgstr ""
+
+msgid "View All"
+msgstr ""
+
+msgid "No active conversations yet."
+msgstr ""
+
+msgid "Find a mentor"
+msgstr ""
+
+msgid "and start your first chat."
+msgstr ""
+
+msgid "Recommended Mentors for You"
+msgstr ""
+
+msgid "Verified"
+msgstr ""
+
+msgid "View Profile"
+msgstr ""
+
+msgid "No recommendations yet."
+msgstr ""
+
+msgid "Update your profile"
+msgstr ""
+
+msgid "with your target country, degree, and major to get matched."
+msgstr ""
+
+msgid "Mentor Dashboard"
+msgstr ""
+
+msgid "Mentor dashboard — help applicants find their path to studying abroad."
+msgstr ""
+
+msgid "so applicants can find and contact you."
+msgstr ""
+
+msgid "Country"
+msgstr ""
+
+msgid "University"
+msgstr ""
+
+msgid "Major"
+msgstr ""
+
+msgid "Year of study"
+msgstr ""
+
+msgid "Languages"
+msgstr ""
+
+msgid "Verified Mentor"
+msgstr ""
+
+msgid "Your profile has been verified by admin."
+msgstr ""
+
+msgid "Verification Pending"
+msgstr ""
+
+msgid "Your request is under review."
+msgstr ""
+
+msgid "Request Rejected"
+msgstr ""
+
+msgid "You can resubmit a new request."
+msgstr ""
+
+msgid "Resubmit Request"
+msgstr ""
+
+msgid "Not Yet Verified"
+msgstr ""
+
+msgid "Get verified to build applicant trust."
+msgstr ""
+
+msgid "Request Verification"
+msgstr ""
+
+msgid "Incoming Requests"
+msgstr ""
+
+msgid "View and respond to applicants who want your guidance."
+msgstr ""
+
+msgid "View Requests"
+msgstr ""
+
+msgid "Continue ongoing conversations with applicants."
+msgstr ""
+
+msgid "Open Chats"
+msgstr ""
+
+msgid "Public Mentor Card Preview"
+msgstr ""
+
+msgid "This is how applicants will see you in the mentor list."
+msgstr ""
+
+msgid "Unverified"
+msgstr ""
+
+msgid "Pending"
+msgstr ""
+
+msgid "Rejected"
+msgstr ""
+
+msgid "Find a student already studying abroad in your target country and field."
+msgstr ""
+
+msgid "All countries"
+msgstr ""
+
+msgid "All degrees"
+msgstr ""
+
+msgid "Language"
+msgstr ""
+
+msgid "Clear filters"
+msgstr ""
+
+msgid "Filtered results:"
+msgstr ""
+
+msgid "result"
+msgstr ""
+
+msgid "Showing %(count)s mentor"
+msgstr ""
+
+msgid "Showing %(count)s mentors"
+msgstr ""
+
+msgid "Available"
+msgstr ""
+
+msgid "Busy"
+msgstr ""
+
+msgid "Remove from saved"
+msgstr ""
+
+msgid "Save mentor"
+msgstr ""
+
+msgid "No mentors found matching your filters."
+msgstr ""
+
+msgid "Back to mentors"
+msgstr ""
+
+msgid "Degree Level"
+msgstr ""
+
+msgid "Major / Field of Study"
+msgstr ""
+
+msgid "Year of Study"
+msgstr ""
+
+msgid "About"
+msgstr ""
+
+msgid "Send Chat Request"
+msgstr ""
+
+msgid "This mentor is currently not accepting new requests."
+msgstr ""
+
+msgid "Save Mentor"
+msgstr ""
+
+msgid "The mentor will receive your request and can accept or decline."
+msgstr ""
+
+msgid "You are viewing as a mentor. Only applicants can contact mentors."
+msgstr ""
+
+msgid "Login as an applicant to contact this mentor."
+msgstr ""
+
+msgid "Login to Contact"
+msgstr ""
+
+msgid "Reviews"
+msgstr ""
+
+msgid "review"
+msgstr ""
+
+msgid "No reviews yet."
+msgstr ""
+
+msgid "Back to Dashboard"
+msgstr ""
+
+msgid "Edit My Profile"
+msgstr ""
+
+msgid "Fill in your details so mentors can understand your goals."
+msgstr ""
+
+msgid "Full Name"
+msgstr ""
+
+msgid "Current Country"
+msgstr ""
+
+msgid "Target Country"
+msgstr ""
+
+msgid "Target Degree"
+msgstr ""
+
+msgid "— Select —"
+msgstr ""
+
+msgid "Intended Major"
+msgstr ""
+
+msgid "Preferred Language"
+msgstr ""
+
+msgid "Language you prefer to communicate with mentors in."
+msgstr ""
+
+msgid "Short Bio"
+msgstr ""
+
+msgid "Briefly describe your background, goals, and what kind of help you are looking for..."
+msgstr ""
+
+msgid "Max 500 characters."
+msgstr ""
+
+msgid "Save Profile"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Profile updated successfully."
+msgstr ""
+
+msgid "Edit Mentor Profile"
+msgstr ""
+
+msgid "Keep your details up to date so applicants can find you easily."
+msgstr ""
+
+msgid "University Name"
+msgstr ""
+
+msgid "Languages you can help applicants in."
+msgstr ""
+
+msgid "Availability"
+msgstr ""
+
+msgid "Let applicants know if you are accepting new chat requests."
+msgstr ""
+
+msgid "Tell applicants about yourself — your program, experience, what questions you can help with..."
+msgstr ""
+
+msgid "Mentor Verification"
+msgstr ""
+
+msgid "Submit your student enrollment details for manual review. Once approved, a verified badge will appear on your profile."
+msgstr ""
+
+msgid "Current Request Status"
+msgstr ""
+
+msgid "Approved"
+msgstr ""
+
+msgid "Your profile is now verified."
+msgstr ""
+
+msgid "Under Review"
+msgstr ""
+
+msgid "Your request is being reviewed by an admin."
+msgstr ""
+
+msgid "Your previous request was not approved. You may resubmit below."
+msgstr ""
+
+msgid "University submitted"
+msgstr ""
+
+msgid "Student ID submitted"
+msgstr ""
+
+msgid "Submitted"
+msgstr ""
+
+msgid "Reviewed"
+msgstr ""
+
+msgid "Resubmit Verification Request"
+msgstr ""
+
+msgid "Submit Verification Request"
+msgstr ""
+
+msgid "Provide your university and student ID exactly as they appear on your enrollment confirmation. An admin will review your request manually."
+msgstr ""
+
+msgid "Student ID / Enrollment Number"
+msgstr ""
+
+msgid "Additional Note"
+msgstr ""
+
+msgid "optional"
+msgstr ""
+
+msgid "Submit Request"
+msgstr ""
+
+msgid "Verification request submitted. We will review it shortly."
+msgstr ""
+
+msgid "Saved Mentors"
+msgstr ""
+
+msgid "Mentors you have bookmarked for later."
+msgstr ""
+
+msgid "Remove"
+msgstr ""
+
+msgid "You have not saved any mentors yet."
+msgstr ""
+
+msgid "Your conversations and pending requests."
+msgstr ""
+
+msgid "Pending Requests"
+msgstr ""
+
+msgid "Applicant"
+msgstr ""
+
+msgid "Interested in %(country)s"
+msgstr ""
+
+msgid "Sent"
+msgstr ""
+
+msgid "Accept"
+msgstr ""
+
+msgid "Awaiting Response"
+msgstr ""
+
+msgid "Mentor"
+msgstr ""
+
+msgid "Active Chats"
+msgstr ""
+
+msgid "No messages yet — say hello!"
+msgstr ""
+
+msgid "Declined"
+msgstr ""
+
+msgid "No conversations yet."
+msgstr ""
+
+msgid "Active"
+msgstr ""
+
+msgid "Your messages"
+msgstr ""
+
+msgid "Chat Request"
+msgstr ""
+
+msgid "wants to chat with you."
+msgstr ""
+
+msgid "Interested in studying in <strong>%(country)s</strong>"
+msgstr ""
+
+msgid "Accept Request"
+msgstr ""
+
+msgid "Decline"
+msgstr ""
+
+msgid "Request Sent"
+msgstr ""
+
+msgid "Your chat request is waiting for the mentor to accept. You will be able to send messages once they accept."
+msgstr ""
+
+msgid "Request Declined"
+msgstr ""
+
+msgid "This mentor has declined your chat request. You can browse other mentors who may be a better match."
+msgstr ""
+
+msgid "Browse Other Mentors"
+msgstr ""
+
+msgid "You declined this chat request."
+msgstr ""
+
+msgid "Chat accepted! Send the first message."
+msgstr ""
+
+msgid "Write a message..."
+msgstr ""
+
+msgid "You"
+msgstr ""
+
+msgid "Leave a Review"
+msgstr ""
+
+msgid "Rating"
+msgstr ""
+
+msgid "Review"
+msgstr ""
+
+msgid "Your review"
+msgstr ""
+
+msgid "Submit Review"
+msgstr ""
+
+msgid "You reviewed this mentor"
+msgstr ""
+
+msgid "Your review has been submitted. Thank you!"
+msgstr ""
+
+msgid "Share your experience with this mentor..."
+msgstr ""

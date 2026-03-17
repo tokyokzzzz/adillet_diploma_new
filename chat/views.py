@@ -2,10 +2,12 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.http import Http404, JsonResponse
+from django.contrib import messages
 from django.db.models import Q
+from django.utils.translation import gettext_lazy as _
 from profiles.models import MentorProfile
-from .models import Conversation, Message
-from .forms import MessageForm
+from .models import Conversation, Message, MentorReview
+from .forms import MentorReviewForm
 
 
 @login_required
@@ -85,11 +87,21 @@ def conversation_detail(request, pk):
     last_msg = chat_messages.last()
     other = conversation.other_participant(request.user)
 
+    existing_review = getattr(conversation, "review", None)
+    show_review_form = (
+        request.user == conversation.applicant
+        and conversation.is_active()
+        and existing_review is None
+    )
+
     return render(request, "chat/conversation_detail.html", {
         "conversation": conversation,
         "chat_messages": chat_messages,
         "last_message_id": last_msg.pk if last_msg else 0,
         "other": other,
+        "existing_review": existing_review,
+        "show_review_form": show_review_form,
+        "review_form": MentorReviewForm() if show_review_form else None,
     })
 
 
@@ -152,3 +164,27 @@ def poll_messages(request, pk):
     ]
 
     return JsonResponse({"messages": data})
+
+
+@login_required
+@require_POST
+def submit_review(request, pk):
+    """Applicant submits a rating and review for a mentor after an active chat."""
+    conversation = get_object_or_404(Conversation, pk=pk)
+
+    if request.user != conversation.applicant:
+        raise Http404
+    if not conversation.is_active():
+        raise Http404
+    if getattr(conversation, "review", None) is not None:
+        raise Http404
+
+    form = MentorReviewForm(request.POST)
+    if form.is_valid():
+        review = form.save(commit=False)
+        review.conversation = conversation
+        review.applicant = request.user
+        review.mentor = conversation.mentor
+        review.save()
+        messages.success(request, _("Your review has been submitted. Thank you!"))
+    return redirect("conversation_detail", pk=pk)

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils import timezone
-from .models import ApplicantProfile, MentorProfile, VerificationRequest
+from .models import ApplicantProfile, MentorProfile, VerificationRequest, SavedMentor
 
 
 @admin.register(ApplicantProfile)
@@ -56,3 +56,9 @@ class VerificationRequestAdmin(admin.ModelAdmin):
     readonly_fields = ("submitted_at", "reviewed_at")
     actions = [approve_requests, reject_requests]
     ordering = ("-submitted_at",)
+
+
+@admin.register(SavedMentor)
+class SavedMentorAdmin(admin.ModelAdmin):
+    list_display = ("applicant", "mentor", "created_at")
+    search_fields = ("applicant__username", "mentor__username")

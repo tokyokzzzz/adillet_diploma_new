@@ -1,6 +1,7 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Dashboard — StudyBridge{% endblock %}
+{% block title %}{% trans "Dashboard" %} — StudyBridge{% endblock %}
 
 {% block content %}
 
@@ -8,10 +9,14 @@
   <div class="container">
     <h1>
       <i class="bi bi-house-door me-2 text-primary"></i>
-      Welcome{% if profile.full_name %}, {{ profile.full_name }}{% else %}, {{ user.username }}{% endif %}
+      {% if profile.full_name %}
+        {% blocktrans with name=profile.full_name %}Welcome, {{ name }}{% endblocktrans %}
+      {% else %}
+        {% blocktrans with name=user.username %}Welcome, {{ name }}{% endblocktrans %}
+      {% endif %}
     </h1>
     <p class="text-muted mb-0 small">
-      Applicant dashboard &mdash; find mentors and plan your journey abroad.
+      {% trans "Applicant dashboard — find mentors and plan your journey abroad." %}
     </p>
   </div>
 </div>
@@ -22,9 +27,9 @@
     <div class="alert alert-warning d-flex align-items-center gap-2 mt-3" role="alert">
       <i class="bi bi-exclamation-circle-fill"></i>
       <span>
-        Your profile is incomplete.
-        <a href="{% url 'edit_applicant_profile' %}" class="alert-link">Complete it</a>
-        so mentors can better understand your goals.
+        {% trans "Your profile is incomplete." %}
+        <a href="{% url 'edit_applicant_profile' %}" class="alert-link">{% trans "Complete it" %}</a>
+        {% trans "so mentors can better understand your goals." %}
       </span>
     </div>
   {% endif %}
@@ -35,30 +40,30 @@
     <div class="col-lg-4">
       <div class="card h-100">
         <div class="card-body">
-          <h6 class="text-muted text-uppercase small fw-semibold mb-3">My Profile</h6>
+          <h6 class="text-muted text-uppercase small fw-semibold mb-3">{% trans "My Profile" %}</h6>
 
           <div class="mb-2">
-            <span class="text-muted small">Full name</span>
+            <span class="text-muted small">{% trans "Full name" %}</span>
             <div class="fw-semibold">{{ profile.full_name|default:"—" }}</div>
           </div>
           <div class="mb-2">
-            <span class="text-muted small">From</span>
+            <span class="text-muted small">{% trans "From" %}</span>
             <div>{{ profile.country|default:"—" }}</div>
           </div>
           <div class="mb-2">
-            <span class="text-muted small">Target country</span>
+            <span class="text-muted small">{% trans "Target country" %}</span>
             <div>{{ profile.target_country|default:"—" }}</div>
           </div>
           <div class="mb-2">
-            <span class="text-muted small">Degree</span>
+            <span class="text-muted small">{% trans "Degree" %}</span>
             <div>{{ profile.get_target_degree_display|default:"—" }}</div>
           </div>
           <div class="mb-2">
-            <span class="text-muted small">Intended major</span>
+            <span class="text-muted small">{% trans "Intended major" %}</span>
             <div>{{ profile.intended_major|default:"—" }}</div>
           </div>
           <div class="mb-3">
-            <span class="text-muted small">Preferred language</span>
+            <span class="text-muted small">{% trans "Preferred language" %}</span>
             <div>{{ profile.preferred_language|default:"—" }}</div>
           </div>
 
@@ -67,7 +72,7 @@
           {% endif %}
 
           <a href="{% url 'edit_applicant_profile' %}" class="btn btn-outline-primary btn-sm w-100">
-            <i class="bi bi-pencil me-1"></i>Edit Profile
+            <i class="bi bi-pencil me-1"></i>{% trans "Edit Profile" %}
           </a>
         </div>
       </div>
@@ -80,22 +85,11 @@
         <div class="col-sm-6">
           <div class="card p-4 h-100 d-flex flex-column">
             <i class="bi bi-search fs-3 text-primary mb-2"></i>
-            <h6 class="fw-semibold">Browse Mentors</h6>
+            <h6 class="fw-semibold">{% trans "Browse Mentors" %}</h6>
             <p class="text-muted small flex-grow-1">
-              Find mentors by country, university, and field of study.
+              {% trans "Find mentors by country, university, and field of study." %}
             </p>
-            <a href="{% url 'mentor_list' %}" class="btn btn-primary btn-sm">Browse Mentors</a>
-          </div>
-        </div>
-
-        <div class="col-sm-6">
-          <div class="card p-4 h-100 d-flex flex-column">
-            <i class="bi bi-calculator fs-3 text-primary mb-2"></i>
-            <h6 class="fw-semibold">Acceptance Calculator</h6>
-            <p class="text-muted small flex-grow-1">
-              Estimate your chances based on GPA, test scores, and university.
-            </p>
-            <a href="{% url 'calculator' %}" class="btn btn-outline-primary btn-sm">Open Calculator</a>
+            <a href="{% url 'mentor_list' %}" class="btn btn-primary btn-sm">{% trans "Browse Mentors" %}</a>
           </div>
         </div>
 
@@ -103,13 +97,13 @@
           <div class="card p-4">
             <div class="d-flex justify-content-between align-items-center mb-3">
               <h6 class="fw-semibold mb-0">
-                <i class="bi bi-chat-dots me-2 text-primary"></i>My Chats
+                <i class="bi bi-chat-dots me-2 text-primary"></i>{% trans "My Chats" %}
               </h6>
-              <a href="{% url 'conversation_list' %}" class="btn btn-outline-secondary btn-sm">View All</a>
+              <a href="{% url 'conversation_list' %}" class="btn btn-outline-secondary btn-sm">{% trans "View All" %}</a>
             </div>
             <p class="text-muted small mb-0">
-              No active conversations yet.
-              <a href="{% url 'mentor_list' %}">Find a mentor</a> and start your first chat.
+              {% trans "No active conversations yet." %}
+              <a href="{% url 'mentor_list' %}">{% trans "Find a mentor" %}</a> {% trans "and start your first chat." %}
             </p>
           </div>
         </div>
@@ -118,6 +112,70 @@
     </div>
 
   </div>
+
+  <!-- Recommended Mentors -->
+  <div class="mt-4">
+    <h5 class="fw-semibold mb-3">
+      <i class="bi bi-stars me-2 text-primary"></i>{% trans "Recommended Mentors for You" %}
+    </h5>
+
+    {% if recommended %}
+      <div class="row g-3">
+        {% for mentor in recommended %}
+          <div class="col-md-6 col-lg-4">
+            <div class="card h-100">
+              <div class="card-body d-flex flex-column">
+
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                  <div>
+                    <div class="fw-semibold">{{ mentor.full_name }}</div>
+                    <div class="text-muted small">
+                      <i class="bi bi-geo-alt me-1"></i>{{ mentor.current_country }}
+                    </div>
+                  </div>
+                  {% if mentor.is_verified %}
+                    <span class="badge bg-success ms-2 flex-shrink-0">
+                      <i class="bi bi-patch-check-fill me-1"></i>{% trans "Verified" %}
+                    </span>
+                  {% endif %}
+                </div>
+
+                <div class="mb-1 small">
+                  <i class="bi bi-building me-1 text-muted"></i>{{ mentor.university_name }}
+                </div>
+                <div class="mb-1 small">
+                  <i class="bi bi-mortarboard me-1 text-muted"></i>
+                  {{ mentor.get_degree_level_display }}
+                  {% if mentor.major %}&mdash; {{ mentor.major }}{% endif %}
+                </div>
+
+                {% if mentor.avg_rating %}
+                  <div class="mb-2 small text-warning">
+                    <i class="bi bi-star-fill"></i>
+                    <span class="text-dark">{{ mentor.avg_rating|floatformat:1 }}</span>
+                  </div>
+                {% endif %}
+
+                <a href="{% url 'mentor_detail' mentor.pk %}" class="btn btn-outline-primary btn-sm mt-auto">
+                  {% trans "View Profile" %}
+                </a>
+
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+    {% else %}
+      <p class="text-muted small">
+        <i class="bi bi-info-circle me-1"></i>
+        {% trans "No recommendations yet." %}
+        <a href="{% url 'edit_applicant_profile' %}">{% trans "Update your profile" %}</a>
+        {% trans "with your target country, degree, and major to get matched." %}
+      </p>
+    {% endif %}
+  </div>
+
 </div>
 
 {% endblock %}

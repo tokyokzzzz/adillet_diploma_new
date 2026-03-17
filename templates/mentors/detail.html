@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block title %}{{ mentor.full_name }} — StudyBridge{% endblock %}
 
@@ -8,7 +9,7 @@
     <div class="col-lg-8">
 
       <a href="{% url 'mentor_list' %}" class="text-muted small">
-        <i class="bi bi-arrow-left me-1"></i>Back to mentors
+        <i class="bi bi-arrow-left me-1"></i>{% trans "Back to mentors" %}
       </a>
 
       <div class="card mt-3">
@@ -22,47 +23,58 @@
                 <i class="bi bi-geo-alt me-1"></i>{{ mentor.current_country }}
               </div>
             </div>
-            {% if mentor.is_verified %}
-              <span class="badge bg-success fs-6 px-3 py-2">
-                <i class="bi bi-patch-check-fill me-1"></i>Verified Mentor
-              </span>
-            {% else %}
-              <span class="badge bg-secondary px-3 py-2">
-                <i class="bi bi-patch-question me-1"></i>Unverified
-              </span>
-            {% endif %}
+            <div class="d-flex flex-column gap-2 align-items-end">
+              {% if mentor.is_verified %}
+                <span class="badge bg-success fs-6 px-3 py-2">
+                  <i class="bi bi-patch-check-fill me-1"></i>{% trans "Verified Mentor" %}
+                </span>
+              {% else %}
+                <span class="badge bg-secondary px-3 py-2">
+                  <i class="bi bi-patch-question me-1"></i>{% trans "Unverified" %}
+                </span>
+              {% endif %}
+              {% if mentor.is_available %}
+                <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2">
+                  <i class="bi bi-circle-fill me-1" style="font-size:0.5rem;"></i>{% trans "Available" %}
+                </span>
+              {% else %}
+                <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-3 py-2">
+                  <i class="bi bi-circle-fill me-1" style="font-size:0.5rem;"></i>{% trans "Busy" %}
+                </span>
+              {% endif %}
+            </div>
           </div>
 
           <!-- Details grid -->
           <div class="row g-3 mb-4">
             <div class="col-sm-6">
               <div class="p-3 rounded bg-light">
-                <div class="text-muted small mb-1">University</div>
+                <div class="text-muted small mb-1">{% trans "University" %}</div>
                 <div class="fw-semibold">{{ mentor.university_name }}</div>
               </div>
             </div>
             <div class="col-sm-6">
               <div class="p-3 rounded bg-light">
-                <div class="text-muted small mb-1">Degree Level</div>
+                <div class="text-muted small mb-1">{% trans "Degree Level" %}</div>
                 <div class="fw-semibold">{{ mentor.get_degree_level_display|default:"—" }}</div>
               </div>
             </div>
             <div class="col-sm-6">
               <div class="p-3 rounded bg-light">
-                <div class="text-muted small mb-1">Major / Field of Study</div>
+                <div class="text-muted small mb-1">{% trans "Major / Field of Study" %}</div>
                 <div class="fw-semibold">{{ mentor.major }}</div>
               </div>
             </div>
             <div class="col-sm-6">
               <div class="p-3 rounded bg-light">
-                <div class="text-muted small mb-1">Year of Study</div>
+                <div class="text-muted small mb-1">{% trans "Year of Study" %}</div>
                 <div class="fw-semibold">{{ mentor.get_year_of_study_display|default:"—" }}</div>
               </div>
             </div>
             {% if mentor.languages %}
               <div class="col-12">
                 <div class="p-3 rounded bg-light">
-                  <div class="text-muted small mb-1">Languages</div>
+                  <div class="text-muted small mb-1">{% trans "Languages" %}</div>
                   <div class="fw-semibold">
                     <i class="bi bi-translate me-1 text-primary"></i>{{ mentor.languages }}
                   </div>
@@ -74,7 +86,7 @@
           <!-- Bio -->
           {% if mentor.bio %}
             <div class="mb-4">
-              <h6 class="fw-semibold text-muted text-uppercase small mb-2">About</h6>
+              <h6 class="fw-semibold text-muted text-uppercase small mb-2">{% trans "About" %}</h6>
               <p class="mb-0" style="line-height: 1.7;">{{ mentor.bio }}</p>
             </div>
           {% endif %}
@@ -83,35 +95,104 @@
           <div class="border-top pt-4">
             {% if user.is_authenticated %}
               {% if user.is_applicant %}
-                <form method="post" action="{% url 'start_chat' mentor.pk %}" class="d-inline">
-                  {% csrf_token %}
-                  <button type="submit" class="btn btn-primary px-4">
-                    <i class="bi bi-chat-dots me-2"></i>Send Chat Request
-                  </button>
-                </form>
+                <div class="d-flex align-items-center gap-3 flex-wrap">
+                  {% if mentor.is_available %}
+                    <form method="post" action="{% url 'start_chat' mentor.pk %}">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-primary px-4">
+                        <i class="bi bi-chat-dots me-2"></i>{% trans "Send Chat Request" %}
+                      </button>
+                    </form>
+                  {% else %}
+                    <div>
+                      <button class="btn btn-secondary px-4" disabled>
+                        <i class="bi bi-chat-dots me-2"></i>{% trans "Send Chat Request" %}
+                      </button>
+                      <p class="text-muted small mt-1 mb-0">
+                        <i class="bi bi-info-circle me-1"></i>
+                        {% trans "This mentor is currently not accepting new requests." %}
+                      </p>
+                    </div>
+                  {% endif %}
+                  <form method="post" action="{% url 'toggle_save_mentor' mentor.pk %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}" />
+                    {% if is_saved %}
+                      <button type="submit" class="btn btn-warning px-4">
+                        <i class="bi bi-bookmark-fill me-2"></i>{% trans "Saved" %}
+                      </button>
+                    {% else %}
+                      <button type="submit" class="btn btn-outline-secondary px-4">
+                        <i class="bi bi-bookmark me-2"></i>{% trans "Save Mentor" %}
+                      </button>
+                    {% endif %}
+                  </form>
+                </div>
                 <p class="text-muted small mt-2 mb-0">
-                  The mentor will receive your request and can accept or decline.
+                  {% trans "The mentor will receive your request and can accept or decline." %}
                 </p>
               {% elif user.is_mentor %}
                 <p class="text-muted small mb-0">
                   <i class="bi bi-info-circle me-1"></i>
-                  You are viewing as a mentor. Only applicants can contact mentors.
+                  {% trans "You are viewing as a mentor. Only applicants can contact mentors." %}
                 </p>
               {% endif %}
             {% else %}
               <p class="text-muted small mb-2">
                 <i class="bi bi-lock me-1"></i>
-                Login as an applicant to contact this mentor.
+                {% trans "Login as an applicant to contact this mentor." %}
               </p>
               <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-primary px-4">
-                Login to Contact
+                {% trans "Login to Contact" %}
               </a>
               <a href="{% url 'signup' %}" class="btn btn-outline-primary ms-2 px-4">
-                Create Account
+                {% trans "Create Account" %}
               </a>
             {% endif %}
           </div>
 
+        </div>
+      </div>
+
+      <!-- Reviews section -->
+      <div class="card mt-4">
+        <div class="card-body p-4">
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <h5 class="fw-semibold mb-0">
+              <i class="bi bi-star-fill text-warning me-2"></i>{% trans "Reviews" %}
+            </h5>
+            {% if avg_rating %}
+              <div class="text-end">
+                <span class="fs-4 fw-bold">{{ avg_rating|floatformat:1 }}</span>
+                <span class="text-muted small">/ 5 &mdash; {{ review_count }} {% trans "review" %}{{ review_count|pluralize }}</span>  {# review count #}
+              </div>
+            {% endif %}
+          </div>
+
+          {% if reviews %}
+            {% for review in reviews %}
+              <div class="border-top pt-3 {% if not forloop.last %}mb-3{% endif %}">
+                <div class="d-flex justify-content-between align-items-start">
+                  <div class="fw-semibold small">
+                    {{ review.applicant.applicant_profile.full_name|default:review.applicant.username }}
+                  </div>
+                  <div class="text-muted small">{{ review.created_at|date:"M j, Y" }}</div>
+                </div>
+                <div class="text-warning small mb-1">
+                  {% for i in "12345" %}
+                    {% if forloop.counter <= review.rating %}
+                      <i class="bi bi-star-fill"></i>
+                    {% else %}
+                      <i class="bi bi-star"></i>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+                <p class="mb-0 small">{{ review.text }}</p>
+              </div>
+            {% endfor %}
+          {% else %}
+            <p class="text-muted small mb-0">{% trans "No reviews yet." %}</p>
+          {% endif %}
         </div>
       </div>
 

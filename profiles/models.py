@@ -29,6 +29,13 @@ class ApplicantProfile(models.Model):
 
 
 class MentorProfile(models.Model):
+    AVAILABILITY_AVAILABLE = "available"
+    AVAILABILITY_BUSY = "busy"
+    AVAILABILITY_CHOICES = [
+        (AVAILABILITY_AVAILABLE, "Available"),
+        (AVAILABILITY_BUSY, "Busy"),
+    ]
+
     DEGREE_CHOICES = [
         ("bachelor", "Bachelor's"),
         ("master", "Master's"),
@@ -57,6 +64,14 @@ class MentorProfile(models.Model):
     languages = models.CharField(max_length=200, blank=True, help_text="e.g. English, Russian, Korean")
     bio = models.TextField(max_length=500, blank=True)
     is_verified = models.BooleanField(default=False)
+    availability_status = models.CharField(
+        max_length=20,
+        choices=AVAILABILITY_CHOICES,
+        default=AVAILABILITY_AVAILABLE,
+    )
+
+    def is_available(self):
+        return self.availability_status == self.AVAILABILITY_AVAILABLE
 
     def __str__(self):
         return f"MentorProfile({self.user.username})"
@@ -106,3 +121,24 @@ class VerificationRequest(models.Model):
 
     def is_rejected(self):
         return self.status == self.STATUS_REJECTED
+
+
+class SavedMentor(models.Model):
+    applicant = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="saved_mentors",
+    )
+    mentor = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="saved_by",
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ("applicant", "mentor")
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"{self.applicant.username} → {self.mentor.username}"

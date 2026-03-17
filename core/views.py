@@ -1,9 +1,52 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import Http404
 from django.contrib.auth.decorators import login_required
-from profiles.models import ApplicantProfile, MentorProfile, VerificationRequest
-from .forms import CalculatorForm
-from .calculator import estimate
+from django.db.models import Avg, Count
+from profiles.models import ApplicantProfile, MentorProfile, VerificationRequest, SavedMentor
+from chat.models import MentorReview
+
+
+def match_mentors(profile):
+    """
+    Score and rank mentors against an applicant profile.
+    Returns up to 5 MentorProfile objects (with match_score attribute), score > 0.
+
+    Scoring:
+      +2  target_country    == mentor current_country  (case-insensitive)
+      +2  target_degree     == mentor degree_level
+      +2  intended_major  found in mentor major        (case-insensitive)
+      +1  preferred_language found in mentor languages (case-insensitive)
+      +1  mentor is verified (tie-breaker bonus)
+    """
+    candidates = (
+        MentorProfile.objects
+        .exclude(full_name="")
+        .exclude(current_country="")
+        .exclude(university_name="")
+        .exclude(major="")
+        .select_related("user")
+        .annotate(avg_rating=Avg("user__received_reviews__rating"))
+    )
+
+    scored = []
+    for mentor in candidates:
+        score = 0
+        if profile.target_country and mentor.current_country.lower() == profile.target_country.lower():
+            score += 2
+        if profile.target_degree and mentor.degree_level == profile.target_degree:
+            score += 2
+        if profile.intended_major and mentor.major and profile.intended_major.lower() in mentor.major.lower():
+            score += 2
+        if profile.preferred_language and mentor.languages and profile.preferred_language.lower() in mentor.languages.lower():
+            score += 1
+        if mentor.is_verified:
+            score += 1
+        if score > 0:
+            mentor.match_score = score
+            scored.append(mentor)
+
+    scored.sort(key=lambda m: m.match_score, reverse=True)
+    return scored[:5]
 
 
 def home_view(request):
@@ -15,7 +58,11 @@ def applicant_dashboard(request):
     if not request.user.is_applicant():
         return redirect("mentor_dashboard")
     profile, _ = ApplicantProfile.objects.get_or_create(user=request.user)
-    return render(request, "applicant/dashboard.html", {"profile": profile})
+    recommended = match_mentors(profile)
+    return render(request, "applicant/dashboard.html", {
+        "profile": profile,
+        "recommended": recommended,
+    })
 
 
 @login_required
@@ -39,6 +86,8 @@ def mentor_list(request):
         .exclude(university_name="")
         .exclude(major="")
         .select_related("user")
+        .annotate(avg_rating=Avg("user__received_reviews__rating"),
+                  review_count=Count("user__received_reviews"))
         .order_by("-is_verified", "full_name")
     )
 
@@ -68,6 +117,14 @@ def mentor_list(request):
         .order_by("current_country")
     )
 
+    saved_ids = set()
+    if request.user.is_authenticated and request.user.is_applicant():
+        saved_ids = set(
+            SavedMentor.objects
+            .filter(applicant=request.user)
+            .values_list("mentor_id", flat=True)
+        )
+
     context = {
         "mentors": mentors,
         "countries": countries,
@@ -79,6 +136,7 @@ def mentor_list(request):
             "degree": degree,
             "language": language,
         },
+        "saved_ids": saved_ids,
     }
     return render(request, "mentors/list.html", context)
 
@@ -87,22 +145,17 @@ def mentor_detail(request, pk):
     mentor = get_object_or_404(MentorProfile, pk=pk)
     if not mentor.is_complete():
         raise Http404
-    return render(request, "mentors/detail.html", {"mentor": mentor})
-
-
-@login_required
-def calculator_view(request):
-    result = None
-    form = CalculatorForm(request.POST or None)
-
-    if request.method == "POST" and form.is_valid():
-        result = estimate(
-            gpa=form.cleaned_data["gpa"],
-            english_score=form.cleaned_data["english_score"],
-            motivation=int(form.cleaned_data["motivation"]),
-            extracurricular=int(form.cleaned_data["extracurricular"]),
-            country_difficulty=form.cleaned_data["country_difficulty"],
-            university_competitiveness=form.cleaned_data["university_competitiveness"],
-        )
-
-    return render(request, "core/calculator.html", {"form": form, "result": result})
+    reviews = MentorReview.objects.filter(mentor=mentor.user).select_related("applicant__applicant_profile")
+    avg_rating = reviews.aggregate(avg=Avg("rating"))["avg"]
+    is_saved = (
+        request.user.is_authenticated
+        and request.user.is_applicant()
+        and SavedMentor.objects.filter(applicant=request.user, mentor=mentor.user).exists()
+    )
+    return render(request, "mentors/detail.html", {
+        "mentor": mentor,
+        "reviews": reviews,
+        "avg_rating": avg_rating,
+        "review_count": reviews.count(),
+        "is_saved": is_saved,
+    })

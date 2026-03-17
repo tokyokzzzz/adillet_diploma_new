@@ -1,6 +1,7 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Edit Mentor Profile — StudyBridge{% endblock %}
+{% block title %}{% trans "Edit Mentor Profile" %} — StudyBridge{% endblock %}
 
 {% block content %}
 <div class="container py-5">
@@ -9,145 +10,97 @@
 
       <div class="mb-4">
         <a href="{% url 'mentor_dashboard' %}" class="text-muted small">
-          <i class="bi bi-arrow-left me-1"></i>Back to Dashboard
+          <i class="bi bi-arrow-left me-1"></i>{% trans "Back to Dashboard" %}
         </a>
-        <h2 class="fw-bold mt-2">Edit Mentor Profile</h2>
-        <p class="text-muted small">
-          Keep your details up to date so applicants can find you easily.
-        </p>
+        <h2 class="fw-bold mt-2">{% trans "Edit Mentor Profile" %}</h2>
+        <p class="text-muted small">{% trans "Keep your details up to date so applicants can find you easily." %}</p>
       </div>
 
       <div class="card">
         <div class="card-body p-4">
           <form method="post" novalidate>
             {% csrf_token %}
-
             <div class="row g-3">
 
               <div class="col-12">
-                <label class="form-label fw-semibold small">Full Name</label>
-                <input
-                  type="text"
-                  name="full_name"
-                  value="{{ form.full_name.value|default:'' }}"
-                  class="form-control {% if form.full_name.errors %}is-invalid{% endif %}"
-                  placeholder="e.g. Daria Ivanova"
-                />
-                {% if form.full_name.errors %}
-                  <div class="invalid-feedback">{{ form.full_name.errors.0 }}</div>
-                {% endif %}
+                <label class="form-label fw-semibold small">{% trans "Full Name" %}</label>
+                <input type="text" name="full_name" value="{{ form.full_name.value|default:'' }}" class="form-control {% if form.full_name.errors %}is-invalid{% endif %}" placeholder="e.g. Daria Ivanova" />
+                {% if form.full_name.errors %}<div class="invalid-feedback">{{ form.full_name.errors.0 }}</div>{% endif %}
               </div>
 
               <div class="col-sm-6">
-                <label class="form-label fw-semibold small">Current Country</label>
-                <input
-                  type="text"
-                  name="current_country"
-                  value="{{ form.current_country.value|default:'' }}"
-                  class="form-control {% if form.current_country.errors %}is-invalid{% endif %}"
-                  placeholder="e.g. Netherlands"
-                />
-                {% if form.current_country.errors %}
-                  <div class="invalid-feedback">{{ form.current_country.errors.0 }}</div>
-                {% endif %}
+                <label class="form-label fw-semibold small">{% trans "Current Country" %}</label>
+                <input type="text" name="current_country" value="{{ form.current_country.value|default:'' }}" class="form-control {% if form.current_country.errors %}is-invalid{% endif %}" placeholder="e.g. Netherlands" />
+                {% if form.current_country.errors %}<div class="invalid-feedback">{{ form.current_country.errors.0 }}</div>{% endif %}
               </div>
 
               <div class="col-sm-6">
-                <label class="form-label fw-semibold small">University Name</label>
-                <input
-                  type="text"
-                  name="university_name"
-                  value="{{ form.university_name.value|default:'' }}"
-                  class="form-control {% if form.university_name.errors %}is-invalid{% endif %}"
-                  placeholder="e.g. TU Delft"
-                />
-                {% if form.university_name.errors %}
-                  <div class="invalid-feedback">{{ form.university_name.errors.0 }}</div>
-                {% endif %}
+                <label class="form-label fw-semibold small">{% trans "University Name" %}</label>
+                <input type="text" name="university_name" value="{{ form.university_name.value|default:'' }}" class="form-control {% if form.university_name.errors %}is-invalid{% endif %}" placeholder="e.g. TU Delft" />
+                {% if form.university_name.errors %}<div class="invalid-feedback">{{ form.university_name.errors.0 }}</div>{% endif %}
               </div>
 
               <div class="col-sm-6">
-                <label class="form-label fw-semibold small">Degree Level</label>
+                <label class="form-label fw-semibold small">{% trans "Degree Level" %}</label>
                 <select name="degree_level" class="form-select {% if form.degree_level.errors %}is-invalid{% endif %}">
-                  <option value="">— Select —</option>
+                  <option value="">{% trans "— Select —" %}</option>
                   {% for value, label in form.degree_level.field.choices %}
                     {% if value %}
-                      <option value="{{ value }}" {% if form.degree_level.value == value %}selected{% endif %}>
-                        {{ label }}
-                      </option>
+                      <option value="{{ value }}" {% if form.degree_level.value == value %}selected{% endif %}>{{ label }}</option>
                     {% endif %}
                   {% endfor %}
                 </select>
-                {% if form.degree_level.errors %}
-                  <div class="invalid-feedback">{{ form.degree_level.errors.0 }}</div>
-                {% endif %}
+                {% if form.degree_level.errors %}<div class="invalid-feedback">{{ form.degree_level.errors.0 }}</div>{% endif %}
               </div>
 
               <div class="col-sm-6">
-                <label class="form-label fw-semibold small">Major / Field of Study</label>
-                <input
-                  type="text"
-                  name="major"
-                  value="{{ form.major.value|default:'' }}"
-                  class="form-control {% if form.major.errors %}is-invalid{% endif %}"
-                  placeholder="e.g. Data Science"
-                />
-                {% if form.major.errors %}
-                  <div class="invalid-feedback">{{ form.major.errors.0 }}</div>
-                {% endif %}
+                <label class="form-label fw-semibold small">{% trans "Major / Field of Study" %}</label>
+                <input type="text" name="major" value="{{ form.major.value|default:'' }}" class="form-control {% if form.major.errors %}is-invalid{% endif %}" placeholder="e.g. Data Science" />
+                {% if form.major.errors %}<div class="invalid-feedback">{{ form.major.errors.0 }}</div>{% endif %}
               </div>
 
               <div class="col-sm-6">
-                <label class="form-label fw-semibold small">Year of Study</label>
+                <label class="form-label fw-semibold small">{% trans "Year of Study" %}</label>
                 <select name="year_of_study" class="form-select {% if form.year_of_study.errors %}is-invalid{% endif %}">
-                  <option value="">— Select —</option>
+                  <option value="">{% trans "— Select —" %}</option>
                   {% for value, label in form.year_of_study.field.choices %}
                     {% if value %}
-                      <option value="{{ value }}" {% if form.year_of_study.value == value %}selected{% endif %}>
-                        {{ label }}
-                      </option>
+                      <option value="{{ value }}" {% if form.year_of_study.value == value %}selected{% endif %}>{{ label }}</option>
                     {% endif %}
                   {% endfor %}
                 </select>
-                {% if form.year_of_study.errors %}
-                  <div class="invalid-feedback">{{ form.year_of_study.errors.0 }}</div>
-                {% endif %}
+                {% if form.year_of_study.errors %}<div class="invalid-feedback">{{ form.year_of_study.errors.0 }}</div>{% endif %}
               </div>
 
               <div class="col-sm-6">
-                <label class="form-label fw-semibold small">Languages</label>
-                <input
-                  type="text"
-                  name="languages"
-                  value="{{ form.languages.value|default:'' }}"
-                  class="form-control {% if form.languages.errors %}is-invalid{% endif %}"
-                  placeholder="e.g. English, Russian"
-                />
-                <div class="form-text">Languages you can help applicants in.</div>
-                {% if form.languages.errors %}
-                  <div class="invalid-feedback">{{ form.languages.errors.0 }}</div>
-                {% endif %}
+                <label class="form-label fw-semibold small">{% trans "Languages" %}</label>
+                <input type="text" name="languages" value="{{ form.languages.value|default:'' }}" class="form-control {% if form.languages.errors %}is-invalid{% endif %}" placeholder="e.g. English, Russian" />
+                <div class="form-text">{% trans "Languages you can help applicants in." %}</div>
+                {% if form.languages.errors %}<div class="invalid-feedback">{{ form.languages.errors.0 }}</div>{% endif %}
+              </div>
+
+              <div class="col-sm-6">
+                <label class="form-label fw-semibold small">{% trans "Availability" %}</label>
+                <select name="availability_status" class="form-select">
+                  {% for value, label in form.availability_status.field.choices %}
+                    <option value="{{ value }}" {% if form.availability_status.value == value %}selected{% endif %}>{{ label }}</option>
+                  {% endfor %}
+                </select>
+                <div class="form-text">{% trans "Let applicants know if you are accepting new chat requests." %}</div>
               </div>
 
               <div class="col-12">
-                <label class="form-label fw-semibold small">Short Bio</label>
-                <textarea
-                  name="bio"
-                  rows="4"
-                  class="form-control {% if form.bio.errors %}is-invalid{% endif %}"
-                  placeholder="Tell applicants about yourself — your program, experience, what questions you can help with..."
-                >{{ form.bio.value|default:'' }}</textarea>
-                <div class="form-text">Max 500 characters.</div>
-                {% if form.bio.errors %}
-                  <div class="invalid-feedback">{{ form.bio.errors.0 }}</div>
-                {% endif %}
+                <label class="form-label fw-semibold small">{% trans "Short Bio" %}</label>
+                <textarea name="bio" rows="4" class="form-control {% if form.bio.errors %}is-invalid{% endif %}" placeholder="{% trans 'Tell applicants about yourself — your program, experience, what questions you can help with...' %}">{{ form.bio.value|default:'' }}</textarea>
+                <div class="form-text">{% trans "Max 500 characters." %}</div>
+                {% if form.bio.errors %}<div class="invalid-feedback">{{ form.bio.errors.0 }}</div>{% endif %}
               </div>
 
             </div>
 
             <div class="d-flex gap-2 mt-4">
-              <button type="submit" class="btn btn-primary px-4">Save Profile</button>
-              <a href="{% url 'mentor_dashboard' %}" class="btn btn-outline-secondary">Cancel</a>
+              <button type="submit" class="btn btn-primary px-4">{% trans "Save Profile" %}</button>
+              <a href="{% url 'mentor_dashboard' %}" class="btn btn-outline-secondary">{% trans "Cancel" %}</a>
             </div>
 
           </form>

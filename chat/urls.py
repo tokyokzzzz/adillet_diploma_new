@@ -8,5 +8,6 @@ urlpatterns = [
     path("<int:pk>/decline/", views.decline_chat, name="decline_chat"),
     path("<int:pk>/send/", views.send_message, name="send_message"),
     path("<int:pk>/poll/", views.poll_messages, name="poll_messages"),
+    path("<int:pk>/review/", views.submit_review, name="submit_review"),
     path("start/<int:mentor_pk>/", views.start_chat, name="start_chat"),
 ]

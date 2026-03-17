@@ -31,6 +31,7 @@ class MentorProfileForm(forms.ModelForm):
             "year_of_study",
             "languages",
             "bio",
+            "availability_status",
         ]
         widgets = {
             "bio": forms.Textarea(attrs={"rows": 4}),
