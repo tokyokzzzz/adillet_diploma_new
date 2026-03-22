@@ -14,3 +14,8 @@ staticfiles/
 media/
 .venv/
 venv/
+
+# ML model files
+ml/*.pkl
+ml/*.csv
+*.csv

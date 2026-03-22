@@ -11,7 +11,7 @@ from .forms import ApplicantProfileForm, MentorProfileForm, VerificationRequestF
 
 @login_required
 def edit_applicant_profile(request):
-    profile, _ = ApplicantProfile.objects.get_or_create(user=request.user)
+    profile, _created = ApplicantProfile.objects.get_or_create(user=request.user)
 
     if request.method == "POST":
         form = ApplicantProfileForm(request.POST, instance=profile)
@@ -27,7 +27,7 @@ def edit_applicant_profile(request):
 
 @login_required
 def edit_mentor_profile(request):
-    profile, _ = MentorProfile.objects.get_or_create(user=request.user)
+    profile, _created = MentorProfile.objects.get_or_create(user=request.user)
 
     if request.method == "POST":
         form = MentorProfileForm(request.POST, instance=profile)

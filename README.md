@@ -1,14 +1,14 @@
 # StudyBridge
 
-A web platform that helps students connect with peer mentors for international study guidance, with a simple acceptance estimation calculator and structured messaging.
+A web platform that helps students connect with verified peer mentors for international study guidance, powered by an AI recommendation engine and structured messaging.
 
-Built as a bachelor CS diploma project using Django, PostgreSQL, and Docker.
+Built as a bachelor CS diploma project using Django, PostgreSQL, and Docker. Deployed live on AWS EC2.
 
 ---
 
 ## Description
 
-StudyBridge connects applicants planning to study abroad with student mentors who are already enrolled at universities in their target countries. Applicants can search for mentors by country, university, and field of study, start direct conversations, and use an acceptance estimation calculator to evaluate their academic profile.
+StudyBridge connects applicants planning to study abroad with verified student mentors enrolled at universities in their target countries. The platform uses an AI-powered recommendation engine to match applicants with the most relevant mentors based on profile similarity.
 
 Mentors can apply for a verified badge by submitting their student enrollment details for manual admin review.
 
@@ -21,9 +21,10 @@ Mentors can apply for a verified badge by submitting their student enrollment de
 | Role-based accounts | Users sign up as **Applicant** or **Mentor**; separate dashboards per role |
 | Mentor directory | Search and filter mentors by country, university, degree, major, and language |
 | Direct messaging | Persistent one-on-one chat between applicants and mentors |
-| Acceptance calculator | Rule-based weighted formula estimating admission likelihood |
+| AI Mentor Recommendation | Content-based filtering using cosine similarity (scikit-learn). Recommends mentors ranked by compatibility score based on target country, university, field of study, and degree level. |
 | Mentor verification | Mentors submit enrollment details; admin approves/rejects via Django admin |
 | Admin panel | Full Django admin for managing users, profiles, and verification requests |
+| Bilingual UI | Interface available in English and Kazakh, switchable at runtime |
 
 ---
 
@@ -35,8 +36,35 @@ Mentors can apply for a verified badge by submitting their student enrollment de
 | Database | PostgreSQL 15 |
 | Frontend | Bootstrap 5.3, Bootstrap Icons 1.11.3, Django Templates |
 | Containerization | Docker, Docker Compose |
-| WSGI server | Gunicorn (production-ready, included in requirements) |
+| WSGI server | Gunicorn |
 | Environment | python-dotenv |
+| Internationalization | Django i18n — English and Kazakh (Қазақша) |
+| Source control | Git, GitHub |
+| Cloud hosting | AWS EC2 (Ubuntu) |
+| ML | scikit-learn, numpy, pandas |
+
+---
+
+## Machine Learning
+
+### Algorithm
+Content-Based Filtering — Cosine Similarity
+
+### Library
+scikit-learn (`sklearn.metrics.pairwise.cosine_similarity`)
+
+### How It Works
+1. Each mentor profile is encoded as a 4-dimensional feature vector: `[country, university, degree, major]`
+2. The applicant profile is encoded using the same scheme
+3. Cosine similarity measures the angle between vectors
+4. Mentors are ranked by match score (0–100%)
+5. Top matches are displayed on the mentor listing page and applicant dashboard
+
+### Dataset
+The dataset consists of user profiles stored in the platform PostgreSQL database. No external dataset or offline training phase is required. The system updates automatically as new mentors register.
+
+### Why Cosine Similarity?
+Cosine similarity is a standard technique for content-based recommendation systems. It is efficient, interpretable, and well-suited for categorical profile data. This approach is used in production systems by platforms like LinkedIn for people recommendations.
 
 ---
 
@@ -50,11 +78,9 @@ studybridge/
 │   ├── views.py            # signup_view, login_view, logout_view, redirect_by_role
 │   └── urls.py
 │
-├── core/                   # Home, dashboards, mentor listing, calculator
+├── core/                   # Home, dashboards, mentor listing
 │   ├── views.py            # home, applicant_dashboard, mentor_dashboard,
-│   │                       # mentor_list, mentor_detail, calculator_view
-│   ├── calculator.py       # Pure Python rule-based scoring formula
-│   ├── forms.py            # CalculatorForm
+│   │                       # mentor_list, mentor_detail
 │   └── urls.py
 │
 ├── profiles/               # User profile models and edit views
@@ -84,12 +110,22 @@ studybridge/
 │   ├── mentors/            # list.html, detail.html
 │   ├── profiles/           # edit_applicant.html, edit_mentor.html, verification_request.html
 │   ├── chat/               # conversation_list.html, conversation_detail.html
-│   └── core/               # calculator.html
+│   └── core/               # (empty)
+│
+├── ml/                     # Machine learning recommendation engine
+│   ├── __init__.py
+│   ├── recommender.py      # get_mentor_recommendations() — cosine similarity
+│   └── README_ML.md        # ML system documentation
+│
+├── locale/
+│   ├── en/LC_MESSAGES/     # English translation files (django.po / django.mo)
+│   └── kk/LC_MESSAGES/     # Kazakh translation files (django.po / django.mo)
 │
 ├── static/
 │   └── css/custom.css      # Custom styles (CSS variables, hero, chat bubbles)
 │
 ├── .env                    # Environment variables (not committed)
+├── .env.example            # Environment variable template
 ├── .gitignore
 ├── docker-compose.yml
 ├── Dockerfile
@@ -258,7 +294,6 @@ User.objects.create_user("bob", "bob@example.com", "password123", role="mentor")
 | `/dashboard/mentor/` | Mentor dashboard | Mentor only |
 | `/mentors/` | Mentor listing with search/filter | Public |
 | `/mentors/<id>/` | Mentor detail page | Public |
-| `/calculator/` | Acceptance calculator | Authenticated |
 | `/chat/` | Conversation list | Authenticated |
 | `/chat/<id>/` | Conversation detail | Participants only |
 | `/profile/applicant/edit/` | Edit applicant profile | Authenticated |
@@ -287,42 +322,6 @@ Two ForeignKeys to `User`: `applicant` and `mentor`. `unique_together` constrain
 
 ### `chat.Message`
 ForeignKey to `Conversation` and `sender`. Fields: `text`, `timestamp`. Ordered by `timestamp` ascending.
-
----
-
-## Acceptance Calculator
-
-The calculator is a transparent, rule-based scoring tool — it uses no machine learning or external data.
-
-**Inputs:**
-- GPA (0.0–4.0 scale)
-- English proficiency score (0.0–9.0 IELTS scale)
-- Motivation strength (self-assessed, 1–10)
-- Extracurricular activities (self-assessed, 1–10)
-- Target country difficulty (Easy / Moderate / Hard / Very Hard)
-- Target university competitiveness (Low / Medium / High / Very High)
-
-**Formula:**
-
-1. Each input is normalized to a 0–100 scale
-2. A weighted average produces the base score:
-   - GPA: 35%
-   - English score: 30%
-   - Motivation: 20%
-   - Extracurricular: 15%
-3. Flat penalties are subtracted based on difficulty:
-   - Moderate country or university: −5 pts
-   - Hard: −12 pts
-   - Very Hard: −20 pts
-4. Score is clamped to [0, 100] and rounded to one decimal
-
-**Labels:**
-- ≥76% → Strong Chance
-- ≥56% → Good Chance
-- ≥36% → Moderate Chance
-- <36% → Low Chance
-
-The result page shows the full breakdown (per-factor contributions, penalties, and final score) for transparency.
 
 ---
 
@@ -364,6 +363,127 @@ Access control:
 
 ---
 
+## Internationalization (i18n)
+
+StudyBridge supports two languages switchable at runtime via Django's built-in i18n system.
+
+| Language | Code | Status |
+|---|---|---|
+| English | `en` | Default |
+| Kazakh | `kk` | Translated |
+
+**Implementation details:**
+- `django.middleware.locale.LocaleMiddleware` is active in the middleware stack
+- `USE_I18N = True` and `LOCALE_PATHS = [BASE_DIR / "locale"]` in settings
+- Translation files live in `locale/en/LC_MESSAGES/` and `locale/kk/LC_MESSAGES/` (`.po` source + compiled `.mo`)
+- The `django.template.context_processors.i18n` context processor is enabled
+- `gettext` system package is installed in the Docker image to support `makemessages` and `compilemessages`
+
+**Django i18n commands (inside the container):**
+
+```bash
+# Extract strings marked for translation from templates and Python code
+docker compose exec web python manage.py makemessages -l kk
+
+# Compile .po files into binary .mo files (required after editing translations)
+docker compose exec web python manage.py compilemessages
+```
+
+---
+
+## GitHub
+
+The project source code is hosted on GitHub and was used for deploying to the AWS EC2 server.
+
+```bash
+# Clone the repository
+git clone https://github.com/<your-username>/studybridge.git
+cd studybridge
+```
+
+Push changes to the server by pulling on the EC2 instance:
+
+```bash
+# On the EC2 server
+cd ~/studybridge
+git pull origin main
+docker compose up -d --build
+docker compose exec web python manage.py migrate
+```
+
+---
+
+## AWS EC2 Deployment
+
+StudyBridge is live and running on an AWS EC2 instance. The site is accessible via the server's public IP on port 8000.
+
+### Infrastructure
+
+| Component | Details |
+|---|---|
+| Cloud provider | AWS EC2 |
+| OS | Ubuntu (latest LTS) |
+| Runtime | Docker + Docker Compose |
+| Source | Cloned from GitHub repository via SSH |
+| Access | SSH with `.pem` key pair |
+
+### How It Was Deployed
+
+The server was provisioned on AWS EC2, accessed via SSH, and the application was deployed by cloning the GitHub repository directly onto the instance and running it with Docker Compose — the same setup used in local development.
+
+**Steps performed:**
+
+1. Launched an Ubuntu EC2 instance and configured inbound security group rules to allow ports `22` (SSH) and `8000` (Django)
+2. Connected to the instance via SSH:
+   ```bash
+   ssh -i your-key.pem ubuntu@<EC2-PUBLIC-IP>
+   ```
+3. Installed Docker and Docker Compose on the server:
+   ```bash
+   sudo apt update && sudo apt upgrade -y
+   sudo apt install -y docker.io docker-compose-plugin
+   sudo usermod -aG docker ubuntu
+   ```
+4. Cloned the repository from GitHub:
+   ```bash
+   git clone https://github.com/<your-username>/studybridge.git
+   cd studybridge
+   ```
+5. Created the `.env` file with production values (`DEBUG=False`, correct `ALLOWED_HOSTS`, secure credentials)
+6. Built and started containers:
+   ```bash
+   docker compose up -d --build
+   ```
+7. Ran migrations, collected static files, and compiled translations:
+   ```bash
+   docker compose exec web python manage.py migrate
+   docker compose exec web python manage.py collectstatic --noinput
+   docker compose exec web python manage.py compilemessages
+   ```
+8. Created the superuser account for the admin panel
+
+### Updating the Live Server
+
+After pushing changes to GitHub, SSH into the server and pull:
+
+```bash
+ssh -i your-key.pem ubuntu@<EC2-PUBLIC-IP>
+cd studybridge
+git pull origin main
+docker compose up -d --build
+docker compose exec web python manage.py migrate
+docker compose exec web python manage.py collectstatic --noinput
+```
+
+### Notes
+
+- PostgreSQL data persists in the `postgres_data` Docker named volume — survives container restarts and rebuilds
+- `STATIC_ROOT = BASE_DIR / "staticfiles"` is configured in settings; `collectstatic` works out of the box
+- The `staticfiles/` directory is excluded from git via `.gitignore`
+- The app runs directly on port `8000`; no Nginx reverse proxy is in place
+
+---
+
 ## Future Improvements
 
 These are optional enhancements for a production version — not required for the prototype:
@@ -375,4 +495,4 @@ These are optional enhancements for a production version — not required for th
 - **WebSocket chat** — replace page-reload messaging with real-time updates using Django Channels
 - **Public mentor profiles** — allow unauthenticated users to view mentor profiles without signing up
 - **Password reset** — add Django's built-in password reset flow via email
-- **Deployment config** — production `settings.py` with `DEBUG=False`, `STATIC_ROOT`, and a reverse proxy (Nginx + Gunicorn)
+- **Nginx reverse proxy** — put Nginx in front of Gunicorn for proper static file serving and SSL termination

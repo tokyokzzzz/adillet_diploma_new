@@ -4,49 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Avg, Count
 from profiles.models import ApplicantProfile, MentorProfile, VerificationRequest, SavedMentor
 from chat.models import MentorReview
+from ml.recommender import get_mentor_recommendations
 
-
-def match_mentors(profile):
-    """
-    Score and rank mentors against an applicant profile.
-    Returns up to 5 MentorProfile objects (with match_score attribute), score > 0.
-
-    Scoring:
-      +2  target_country    == mentor current_country  (case-insensitive)
-      +2  target_degree     == mentor degree_level
-      +2  intended_major  found in mentor major        (case-insensitive)
-      +1  preferred_language found in mentor languages (case-insensitive)
-      +1  mentor is verified (tie-breaker bonus)
-    """
-    candidates = (
-        MentorProfile.objects
-        .exclude(full_name="")
-        .exclude(current_country="")
-        .exclude(university_name="")
-        .exclude(major="")
-        .select_related("user")
-        .annotate(avg_rating=Avg("user__received_reviews__rating"))
-    )
-
-    scored = []
-    for mentor in candidates:
-        score = 0
-        if profile.target_country and mentor.current_country.lower() == profile.target_country.lower():
-            score += 2
-        if profile.target_degree and mentor.degree_level == profile.target_degree:
-            score += 2
-        if profile.intended_major and mentor.major and profile.intended_major.lower() in mentor.major.lower():
-            score += 2
-        if profile.preferred_language and mentor.languages and profile.preferred_language.lower() in mentor.languages.lower():
-            score += 1
-        if mentor.is_verified:
-            score += 1
-        if score > 0:
-            mentor.match_score = score
-            scored.append(mentor)
-
-    scored.sort(key=lambda m: m.match_score, reverse=True)
-    return scored[:5]
 
 
 def home_view(request):
@@ -58,10 +17,29 @@ def applicant_dashboard(request):
     if not request.user.is_applicant():
         return redirect("mentor_dashboard")
     profile, _ = ApplicantProfile.objects.get_or_create(user=request.user)
-    recommended = match_mentors(profile)
+
+    recommended = []
+    show_recommendations = False
+
+    try:
+        all_mentors = MentorProfile.objects.filter(
+            is_verified=True
+        ).exclude(university_name="").exclude(major="")
+
+        if profile.target_country and profile.intended_major:
+            recommended = get_mentor_recommendations(
+                profile,
+                list(all_mentors),
+                top_n=3,
+            )
+            show_recommendations = True
+    except Exception:
+        pass
+
     return render(request, "applicant/dashboard.html", {
         "profile": profile,
         "recommended": recommended,
+        "show_recommendations": show_recommendations,
     })
 
 
@@ -81,6 +59,7 @@ def mentor_list(request):
     # Only mentors with complete profiles are shown
     mentors = (
         MentorProfile.objects
+        .filter(is_verified=True)
         .exclude(full_name="")
         .exclude(current_country="")
         .exclude(university_name="")
@@ -125,6 +104,27 @@ def mentor_list(request):
             .values_list("mentor_id", flat=True)
         )
 
+    # ML recommendations for logged-in applicants with a complete profile
+    recommended = []
+    show_recommendations = False
+
+    if request.user.is_authenticated and hasattr(request.user, "role"):
+        if request.user.role == "applicant":
+            try:
+                applicant_profile = ApplicantProfile.objects.get(user=request.user)
+                if applicant_profile.target_country and applicant_profile.intended_major:
+                    all_mentors = MentorProfile.objects.filter(
+                        is_verified=True
+                    ).exclude(university_name="").exclude(major="")
+                    recommended = get_mentor_recommendations(
+                        applicant_profile,
+                        list(all_mentors),
+                        top_n=5,
+                    )
+                    show_recommendations = True
+            except ApplicantProfile.DoesNotExist:
+                pass
+
     context = {
         "mentors": mentors,
         "countries": countries,
@@ -137,6 +137,8 @@ def mentor_list(request):
             "language": language,
         },
         "saved_ids": saved_ids,
+        "recommended": recommended,
+        "show_recommendations": show_recommendations,
     }
     return render(request, "mentors/list.html", context)
 

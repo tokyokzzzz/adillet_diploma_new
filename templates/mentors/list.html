@@ -68,6 +68,52 @@
     </div>
   </div>
 
+  {% if show_recommendations %}
+  <div class="mb-5">
+    <h4 class="mb-3">
+      <span class="badge bg-primary me-2">AI</span>
+      Recommended Mentors For You
+    </h4>
+    <p class="text-muted small mb-3">
+      Based on your profile — ranked by compatibility score
+    </p>
+    <div class="row g-3">
+      {% for mentor, score in recommended %}
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-primary shadow-sm">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+              <h6 class="card-title mb-0">{{ mentor.full_name }}</h6>
+              <span class="badge bg-success">{{ score }}% match</span>
+            </div>
+            <p class="text-muted small mb-1">
+              🎓 {{ mentor.university_name }}
+            </p>
+            <p class="text-muted small mb-1">
+              📍 {{ mentor.current_country }}
+            </p>
+            <p class="text-muted small mb-2">
+              📚 {{ mentor.major }}
+            </p>
+            {% if mentor.is_verified %}
+            <span class="badge bg-success mb-2">✓ Verified</span>
+            {% endif %}
+            <div class="mt-2">
+              <a href="{% url 'mentor_detail' mentor.pk %}"
+                 class="btn btn-outline-primary btn-sm w-100">
+                View Profile
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <hr class="my-4">
+    <h5>All Mentors</h5>
+  </div>
+  {% endif %}
+
   {% if filters.country or filters.university or filters.major or filters.degree or filters.language %}
     <p class="text-muted small mb-3">
       <i class="bi bi-funnel me-1"></i>{% trans "Filtered results:" %}
